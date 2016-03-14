@@ -14,7 +14,37 @@ public class Squid : MonoBehaviour {
 
     public float bulletSpeed = 4f;
 
+    public GameObject greenPowerup, bluePowerup;
+    public int HEALTH = 55;
+    void Die()
+    {
+        for (int c = 0; c < 10; ++c)
+        {
+            float ranx = Random.Range(-1f, 1f);
+            float rany = Random.Range(-1f, 1f);
+            Instantiate(greenPowerup, new Vector3(transform.position.x + ranx, transform.position.y + rany, transform.position.z), transform.rotation);
+        }
+        for (int c = 0; c < 5; ++c)
+        {
+            float ranx = Random.Range(-1f, 1f);
+            float rany = Random.Range(-1f, 1f);
+            Instantiate(bluePowerup, new Vector3(transform.position.x + ranx, transform.position.y + rany, transform.position.z), transform.rotation);
+        }
+        Destroy(gameObject);
+    }
 
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "PlayerBullet")
+        {
+            HEALTH -= 1;
+            Destroy(collision.gameObject);
+            if (HEALTH <= 0)
+            {
+                Die();
+            }
+        }
+    }
     Rigidbody2D rb;
     SpriteRenderer sr;
     // Use this for initialization
