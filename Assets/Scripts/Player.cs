@@ -6,6 +6,12 @@ public class Player : MonoBehaviour {
     const int NUMBER_OF_PLAYERS = 2;
     public static Dictionary<GameObject, Player> player_go_dict = new Dictionary<GameObject, Player>();
 
+    public GameObject[] weapon_upgrades;
+    public int upgrade_interval = 20;
+    public int upgrade_level;
+    public int upgrade_points;
+    public int powerup_points;
+
     public float move_speed = 10f;
     Rigidbody2D rigid;
 
@@ -15,11 +21,16 @@ public class Player : MonoBehaviour {
     // Use this for initialization
     void Start () {
         rigid = GetComponent<Rigidbody2D>();
+        upgrade_level = 0;
+        for (int i = 1; i < weapon_upgrades.Length; ++i) {
+            weapon_upgrades[i].SetActive(false);
+        }
 	}
 
     // Update is called once per frame
     void Update() {
         updateMovement();
+        updateUpgrade();
         if (getInputFire() && fireDelegate != null) {
             fireDelegate();
         }
@@ -28,6 +39,19 @@ public class Player : MonoBehaviour {
     void updateMovement() {
         Vector2 move_vector = getInputMovementVector();
         rigid.velocity = move_vector * move_speed;
+    }
+
+    void updateUpgrade() {
+        int current_upgrade_level = upgrade_points / upgrade_interval;
+        if (current_upgrade_level == upgrade_level) {
+            return;
+        }
+
+        for (int i = upgrade_level + 1; i <= current_upgrade_level ; ++i) {
+            print("Here");
+            weapon_upgrades[i].SetActive(true);
+        }
+        upgrade_level = current_upgrade_level;
     }
 
     public virtual Bounds getLevelBounds() {

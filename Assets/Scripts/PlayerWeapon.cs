@@ -6,22 +6,28 @@ public class PlayerWeapon : MonoBehaviour {
     public float delay_between_shots;
     public float bullet_velocity = 10f;
 
+    protected Player weapon_player;
     float last_shot_time;
     Object bullet_prefab;
     Rigidbody2D player_rigid;
-    protected Player weapon_player;
+    bool added_to_fire_delegate;
 
 	// Use this for initialization
 	protected virtual void Start () {
         bullet_prefab = Resources.Load(bullet_prefab_name);
         weapon_player = Player.player_go_dict[transform.parent.gameObject];
-        weapon_player.fireDelegate += Fire;
         player_rigid = weapon_player.GetComponent<Rigidbody2D>();
         last_shot_time = 0;
+        added_to_fire_delegate = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
+        if (gameObject.activeSelf && !added_to_fire_delegate) {
+            weapon_player.fireDelegate += Fire;
+        } else if (!gameObject.activeSelf && added_to_fire_delegate) {
+            weapon_player.fireDelegate -= Fire;
+        }
         updatePosition();	
 	}
 
