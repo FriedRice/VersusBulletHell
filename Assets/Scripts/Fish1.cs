@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Fish1 : MonoBehaviour {
+public class Fish1 : Enemy {
     public Sprite[] idle;
     public float animspeed = 0.1f;
 
@@ -53,6 +53,10 @@ public class Fish1 : MonoBehaviour {
         float x = Random.Range(movementBoundXLeft, movementBoundXright);
         float y = Random.Range(movementBoundYBot, movementBoundYTop);
         nextdest = new Vector3(x, y, transform.position.z);
+        if (side == -1) {
+            nextdest = transform.parent.Find("RightFish").gameObject.GetComponent<Fish1>().nextdest;
+            nextdest.x = nextdest.x * -1;
+        }
     }
 
 	// Update is called once per frame
@@ -61,6 +65,14 @@ public class Fish1 : MonoBehaviour {
         {
             CalculateNextPosition();
         }
+        if (side == -1) {
+            Vector3 temp = transform.parent.Find("RightFish").transform.position;
+            temp.x = temp.x * -1;
+            transform.position = temp;
+            return;
+
+        }
         rb.AddForce((nextdest - transform.position) * Time.deltaTime * Speed, ForceMode2D.Force);
+
 	}
 }
