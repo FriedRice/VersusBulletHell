@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BulletSprite : MonoBehaviour {
+public class BulletSprite : MonoBehaviour
+{
     public Sprite[] DieAnim;
     public Sprite[] NormalAnim;
 
@@ -10,17 +11,18 @@ public class BulletSprite : MonoBehaviour {
     bool alive = true;
 
     SpriteRenderer sr;
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         sr = GetComponent<SpriteRenderer>();
         StartCoroutine(anim());
-	}
+    }
 
     IEnumerator anim()
     {
         while (alive)
         {
-            for(int c = 0; c < NormalAnim.Length; ++c)
+            for (int c = 0; c < NormalAnim.Length; ++c)
             {
                 sr.sprite = NormalAnim[c];
                 yield return new WaitForSeconds(animPlaySpeed);
@@ -43,9 +45,22 @@ public class BulletSprite : MonoBehaviour {
         alive = false;
         StartCoroutine(dieanim());
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.name == "Divider")
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
+
+
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }
