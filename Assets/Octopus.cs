@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Squid : MonoBehaviour {
+public class Octopus : MonoBehaviour {
+
     public Sprite[] idle;
     public float animspeed = 0.1f;
 
@@ -23,7 +24,7 @@ public class Squid : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         StartCoroutine(animate());
-       //CalculateNextPosition();
+        //CalculateNextPosition();
     }
 
     IEnumerator animate()
@@ -31,23 +32,35 @@ public class Squid : MonoBehaviour {
         while (true)
         {
             float ANGLE = 0f;
-            for(int c = 0; c < 25; ++c)
+            for (int c = 0; c < 25; ++c)
             {
-                GameObject g = Instantiate(bullet, ShootLoc.transform.position, Quaternion.Euler(0f,0f,ANGLE)) as GameObject;
+                GameObject g = Instantiate(bullet, ShootLoc.transform.position, Quaternion.Euler(0f, 0f, ANGLE)) as GameObject;
                // g.transform.SetParent(gameObject.transform);
                 g.GetComponent<Rigidbody2D>().AddForce(g.transform.up * bulletSpeed);
                 ANGLE += 14.4f;
-                yield return new WaitForSeconds(0.15f);
             }
+
+            yield return new WaitForSeconds(1f);
+            ANGLE = 90f;
+            for (int c = 0; c < 25; ++c)
+            {
+                GameObject g = Instantiate(bullet, ShootLoc.transform.position, Quaternion.Euler(0f, 0f, ANGLE)) as GameObject;
+                // g.transform.SetParent(gameObject.transform);
+                g.GetComponent<Rigidbody2D>().AddForce(g.transform.up * bulletSpeed);
+                ANGLE += 14.4f;
+            }
+
+
+            yield return new WaitForSeconds(2.5f);
             //g.GetComponent<Rigidbody2D>().AddForce(Vector2.down * bulletSpeed + Vector2.right * rng * bulletSpeed, ForceMode2D.Impulse);
         }
     }
-    
+
 
     // Update is called once per frame
     void Update()
     {
-        rb.AddForce(Vector3.down *  Time.deltaTime * Speed, ForceMode2D.Force);
+        rb.AddForce(Vector3.down * Time.deltaTime * Speed, ForceMode2D.Force);
 
     }
 }
