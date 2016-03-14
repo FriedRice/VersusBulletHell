@@ -41,7 +41,6 @@ public class Player1 : Player {
         if (Input.GetKey(P1_MOVE_LEFT_KEY)) {
             move_vector.x -= 1;
         }
-
         return move_vector.normalized;
     }
 
