@@ -35,6 +35,10 @@ public class PlayerWeapon : MonoBehaviour {
         return;
     }
 
+    public virtual void reset() {
+        return;
+    }
+
     public void Fire() { 
         if (Time.time - last_shot_time < delay_between_shots) {
             return;

@@ -47,9 +47,9 @@ public class Player : MonoBehaviour {
             return;
         }
 
-        for (int i = upgrade_level + 1; i <= current_upgrade_level ; ++i) {
-            print("Here");
+        for (int i = 0; i <= current_upgrade_level ; ++i) {
             weapon_upgrades[i].SetActive(true);
+            weapon_upgrades[i].SendMessage("reset");
         }
         upgrade_level = current_upgrade_level;
     }

@@ -30,4 +30,8 @@ public class PlayerRotWeapon : PlayerWeapon {
             }
         }
     }
+
+    public override void reset() {
+        current_angle = Mathf.PI * start_position;
+    }
 }
