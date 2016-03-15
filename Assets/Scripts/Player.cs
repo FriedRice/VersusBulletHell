@@ -103,7 +103,7 @@ public class Player : MonoBehaviour {
     }
 
     void updateUpgrade() {
-        int current_upgrade_level = Mathf.Max(upgrade_points / upgrade_interval, weapon_upgrades.Length - 1);
+        int current_upgrade_level = Mathf.Min(upgrade_points / upgrade_interval, weapon_upgrades.Length - 1);
         if (current_upgrade_level == upgrade_level) {
             return;
         }
