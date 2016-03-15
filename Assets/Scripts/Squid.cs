@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Squid : MonoBehaviour {
+public class Squid : Enemy {
     public Sprite[] idle;
     public float animspeed = 0.1f;
 
@@ -18,13 +18,14 @@ public class Squid : MonoBehaviour {
     public int HEALTH = 55;
     void Die()
     {
-        for (int c = 0; c < 10; ++c)
+        int rng = Mathf.CeilToInt(Random.Range(0f, 10f));
+        for (int c = 0; c < rng; ++c)
         {
             float ranx = Random.Range(-1f, 1f);
             float rany = Random.Range(-1f, 1f);
             Instantiate(greenPowerup, new Vector3(transform.position.x + ranx, transform.position.y + rany, transform.position.z), transform.rotation);
         }
-        for (int c = 0; c < 5; ++c)
+        for (int c = 0; c < rng; ++c)
         {
             float ranx = Random.Range(-1f, 1f);
             float rany = Random.Range(-1f, 1f);

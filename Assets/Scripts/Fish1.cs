@@ -61,7 +61,7 @@ public class Fish1 : Enemy {
 
 	// Update is called once per frame
 	void Update () {
-	    if((transform.position - nextdest).magnitude < 5)
+	    if((transform.position - nextdest).magnitude < 0.2)
         {
             CalculateNextPosition();
         }
@@ -72,7 +72,15 @@ public class Fish1 : Enemy {
             return;
 
         }
-        rb.AddForce((nextdest - transform.position) * Time.deltaTime * Speed, ForceMode2D.Force);
+        Vector3 to_point = nextdest - transform.position;
+       if(to_point.magnitude> 0.5) transform.position += Vector3.Normalize(to_point) / 1000 *Speed ;
+       else {
+           transform.position += Vector3.Normalize(to_point) * to_point.magnitude/2f/1000*Speed;
+       }
+
 
 	}
+    void FixedUpdate() {
+       // rb.AddForce( Vector3.Normalize(nextdest - transform.position)  * Speed, ForceMode2D.Force);
+    }
 }

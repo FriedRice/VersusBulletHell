@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour {
 
 
 
-    void Initialize(Vector2 new_spawn_pos) {
+    public void Initialize(Vector2 new_spawn_pos) {
         spawn_position = new_spawn_pos;
         if (side != 0) {
            spawn_position.x = spawn_position.x * side;
