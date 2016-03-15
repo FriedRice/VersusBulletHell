@@ -24,7 +24,37 @@ public class Fish1 : Enemy {
         CalculateNextPosition();
         rb = GetComponent<Rigidbody2D>();
 	}
-
+    void Die()
+    {
+        int rng = Mathf.CeilToInt(Random.Range(0f, 10f));
+        for (int c = 0; c < rng; ++c)
+        {
+            float ranx = Random.Range(-1f, 1f);
+            float rany = Random.Range(-1f, 1f);
+            Instantiate(greenPowerup, new Vector3(transform.position.x + ranx, transform.position.y + rany, transform.position.z), transform.rotation);
+        }
+        for (int c = 0; c < rng; ++c)
+        {
+            float ranx = Random.Range(-1f, 1f);
+            float rany = Random.Range(-1f, 1f);
+            Instantiate(bluePowerup, new Vector3(transform.position.x + ranx, transform.position.y + rany, transform.position.z), transform.rotation);
+        }
+        Destroy(gameObject);
+    }
+    public int HEALTH = 15;
+    public GameObject greenPowerup, bluePowerup;
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "PlayerBullet")
+        {
+            HEALTH -= 1;
+            Destroy(collision.gameObject);
+            if (HEALTH <= 0)
+            {
+                Die();
+            }
+        }
+    }
     IEnumerator animate()
     {
         while (true)
@@ -42,6 +72,7 @@ public class Fish1 : Enemy {
             }
             float rng = Random.Range(-1f, 1f);
             GameObject g = Instantiate(bullet, ShootLoc.transform.position, transform.rotation) as GameObject;
+            //g.transform.SetParent(gameObject.transform);
             g.GetComponent<Rigidbody2D>().AddForce(Vector2.down * bulletSpeed + Vector2.right * rng * bulletSpeed, ForceMode2D.Impulse);
         }
     }

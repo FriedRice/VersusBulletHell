@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Octopus : MonoBehaviour
+public class Octopus : Enemy
 {
 
     public Sprite[] idle;
@@ -70,7 +70,7 @@ public class Octopus : MonoBehaviour
             for (int c = 0; c < 25; ++c)
             {
                 GameObject g = Instantiate(bullet, ShootLoc.transform.position, Quaternion.Euler(0f, 0f, ANGLE)) as GameObject;
-                // g.transform.SetParent(gameObject.transform);
+                //g.transform.SetParent(gameObject.transform);
                 g.GetComponent<Rigidbody2D>().AddForce(g.transform.up * bulletSpeed);
                 ANGLE += 14.4f;
             }
@@ -80,7 +80,7 @@ public class Octopus : MonoBehaviour
             for (int c = 0; c < 25; ++c)
             {
                 GameObject g = Instantiate(bullet, ShootLoc.transform.position, Quaternion.Euler(0f, 0f, ANGLE)) as GameObject;
-                // g.transform.SetParent(gameObject.transform);
+                //g.transform.SetParent(gameObject.transform);
                 g.GetComponent<Rigidbody2D>().AddForce(g.transform.up * bulletSpeed);
                 ANGLE += 14.4f;
             }
