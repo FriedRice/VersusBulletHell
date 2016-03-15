@@ -84,10 +84,12 @@ public class Fish1 : Enemy {
         float x = Random.Range(movementBoundXLeft, movementBoundXright);
         float y = Random.Range(movementBoundYBot, movementBoundYTop);
         nextdest = new Vector3(x, y, transform.position.z);
+        /*
         if (side == -1) {
             nextdest = transform.parent.Find("RightFish").gameObject.GetComponent<Fish1>().nextdest;
             nextdest.x = nextdest.x * -1;
         }
+         * */
     }
 
 	// Update is called once per frame

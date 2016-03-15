@@ -5,7 +5,7 @@ public class Spawner : MonoBehaviour {
     public List<GameObject> fish_list;
     public List<GameObject> all_fish_left;
     public List<GameObject> all_fish_right;
-    public int max_fish = 5;
+    public int max_fish = 6;
     float more_fish_delay = 5;
     float more_fish_counter = 0;
     // Use this for initialization
@@ -43,17 +43,24 @@ public class Spawner : MonoBehaviour {
             if (more_fish_counter < more_fish_delay)
                 more_fish_counter++;
             else {
-                max_fish++;
+              //  max_fish++;
                 more_fish_counter = 0;
             }
         }
         for (int i = all_fish_left.Count - 1; i > -1; i--) {
-            if (all_fish_left[i] == null)
+            if (all_fish_left[i] == null || all_fish_left[i].transform.position.y < -7) {
+                if (all_fish_left[i] != null)
+                    Destroy(all_fish_left[i]);
                 all_fish_left.RemoveAt(i);
+            }
+
         }
         for (int i = all_fish_right.Count - 1; i > -1; i--) {
-            if (all_fish_right[i] == null)
+            if (all_fish_right[i] == null || all_fish_right[i].transform.position.y < -7) {
+                if (all_fish_right[i] != null)
+                    Destroy(all_fish_right[i]);
                 all_fish_right.RemoveAt(i);
+            }
         }
 
     }
