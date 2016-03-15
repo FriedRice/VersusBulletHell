@@ -14,7 +14,13 @@ public class LevelBound : MonoBehaviour {
 	}
 
     void OnCollisionEnter2D(Collision2D coll) {
-        if (coll.gameObject.tag == "PlayerBullet" || coll.gameObject.tag == "Enemy" || coll.gameObject.tag == "EnemyBullet") {
+        if (coll.gameObject.tag == "Enemy") {
+            Destroy(coll.gameObject);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D coll) {
+        if (coll.gameObject.tag == "PlayerBullet" || coll.gameObject.tag == "EnemyBullet") {
             Destroy(coll.gameObject);
         }
     }
