@@ -50,7 +50,10 @@ public class Player : MonoBehaviour {
             fireDelegate();
         }
     }
-
+    public int POWERUPTHRESHOLD = 25;
+    public bool hasPowerup = false;
+    public string PowerupName = "None";
+    public GameObject LASER;
     void updateMovement() {
         Vector2 move_vector = getInputMovementVector();
         if (!level_bounds.Contains(this.transform.position)) {
@@ -68,6 +71,35 @@ public class Player : MonoBehaviour {
                 }
             }
         }
+
+        if(powerup_points > POWERUPTHRESHOLD)
+        {
+            hasPowerup = true;
+            PowerupName = "Laser";
+        } else
+        {
+            hasPowerup = false;
+            PowerupName = "None";
+        }
+
+        if (getInputPower())
+        {
+            if (hasPowerup)
+            {
+                PowerupName = "None";
+                powerup_points = 0;
+                hasPowerup = false;
+                if(gameObject.transform.position.x < 0)
+                {
+                    Instantiate(LASER, players[1].transform.position, transform.rotation);
+                } else
+                {
+
+                    Instantiate(LASER, players[0].transform.position, transform.rotation);
+                }
+            }
+        }
+        HUB.S.UpdatePowerup();
     }
 
     void updateUpgrade() {

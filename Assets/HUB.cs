@@ -20,18 +20,17 @@ public class HUB : MonoBehaviour {
 
     public void UpdateWeapon()
     {
-        int num = Player.players[0].upgrade_points;
-        weaponLeft.text = "POWER: " + num;
-        num = Player.players[1].upgrade_points;
-        weaponRight.text = "POWER: " + num;
+        int num = Player.players[0].upgrade_level + 1;
+        weaponLeft.text = "Weapon Lv: " + num;
+        num = Player.players[1].upgrade_level + 1;
+        weaponRight.text = "Weapon Lv: " + num;
     }
 
     public void UpdatePowerup()
     {
-        int num = Player.players[0].powerup_points;
-        powerupLeft.text = "POWER: " + num;
-        num = Player.players[1].powerup_points;
-        powerupRight.text = "POWER: " + num;
+        powerupLeft.text = "Powerup Progress: " + (Player.players[0].powerup_points /(float) Player.players[0].POWERUPTHRESHOLD * 100f).ToString("F2") + "%\nAttack: " + Player.players[0].PowerupName;
+        powerupRight.text = "Powerup Progress: " + (Player.players[1].powerup_points / (float)Player.players[1].POWERUPTHRESHOLD * 100f).ToString("F2") + "%\nAttack: " + Player.players[1].PowerupName;
+
     }
 
     void Awake()
