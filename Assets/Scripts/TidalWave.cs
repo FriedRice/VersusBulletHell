@@ -21,10 +21,10 @@ public class TidalWave : MonoBehaviour {
 		speed = Random.Range (speedMin, speedMax);
 		float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 		transform.rotation = Quaternion.AngleAxis(angle - 90f, Vector3.forward);
+        GetComponent<Rigidbody2D>().velocity = speed * direction;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		transform.position +=  speed * Time.deltaTime * direction;
 	}
 }

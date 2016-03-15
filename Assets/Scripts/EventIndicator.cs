@@ -11,6 +11,13 @@ public class EventIndicator : MonoBehaviour {
     public static EventIndicator Panels;
     public float delay = 15;
     float timer = 0;
+
+    void Awake()
+    {
+
+        Panels = this.GetComponent<EventIndicator>();
+    }
+
     // Use this for initialization
     void Start() {
         panel1 = transform.Find("EventPanel").Find("p1").gameObject;
@@ -43,5 +50,6 @@ public class EventIndicator : MonoBehaviour {
             back_panel.GetComponent<Renderer>().material.color = temp;
             Invoke("ResetPanel", 3);
         }
+
     }
 }

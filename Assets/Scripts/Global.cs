@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Global : MonoBehaviour {
     public static Global S;
@@ -25,6 +26,27 @@ public class Global : MonoBehaviour {
             }
         }
     }
+    public GameObject wave;
+    public GameObject warning;
+    IEnumerator makewaves()
+    {
+        while (true)
+        {
+            warning.SetActive(true);
+            yield return new WaitForSeconds(2f);
+            int rand = Random.Range(9, 20);
+            float interval = Random.Range(3f, 20f);
+
+            for (int c = 0; c < rand; ++c)
+            {
+                float xpos = Random.Range(-9f, 9f);
+                float ypos = Random.Range(5f, 7f);
+                Instantiate(wave, new Vector3(xpos, ypos, 0f), transform.rotation);
+            }
+            warning.SetActive(false);
+            yield return new WaitForSeconds(interval - 2f);
+        }
+    }
 
     void Awake()
     {
@@ -33,7 +55,7 @@ public class Global : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	   
+        StartCoroutine(makewaves());
 	}
 	
 	// Update is called once per frame
