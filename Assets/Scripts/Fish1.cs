@@ -102,6 +102,7 @@ public class Fish1 : Enemy {
         if (side == -1 && RF!=null) {
             Vector3 temp = transform.parent.Find("RightFish").transform.position;
             temp.x = temp.x * -1;
+            temp.z = transform.position.z;
             transform.position = temp;
             return;
 
