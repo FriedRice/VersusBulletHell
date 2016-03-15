@@ -138,7 +138,7 @@ public class Player : MonoBehaviour {
     public void loseLife() {
         Global.S.DestroyLevelEnemies(this.transform.position);
         --lives;
-        //HUB.S.UpdateLives();
+        HUB.S.UpdateLives();
         for (int i = 1; i <= upgrade_level; ++i) {
             weapon_upgrades[i].SendMessage("disable");
             weapon_upgrades[i].SetActive(false);
