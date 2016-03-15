@@ -72,7 +72,7 @@ public class Player : MonoBehaviour {
             }
         }
 
-        if(powerup_points > POWERUPTHRESHOLD)
+        if(powerup_points >= POWERUPTHRESHOLD)
         {
             hasPowerup = true;
             PowerupName = "Laser";
