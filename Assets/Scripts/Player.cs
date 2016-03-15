@@ -58,6 +58,7 @@ public class Player : MonoBehaviour {
         Vector2 move_vector = getInputMovementVector();
         if (!level_bounds.Contains(this.transform.position)) {
             this.transform.position = fitInLevelBounds(this.transform.position);
+            rigid.velocity = Vector2.zero;
         } else {
             if (getInputMoveSlow()) {
                 rigid.velocity = move_vector * move_slow_speed;

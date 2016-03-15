@@ -6,7 +6,7 @@ public class Spawner : MonoBehaviour {
     public List<GameObject> all_fish_left;
     public List<GameObject> all_fish_right;
     public int max_fish = 6;
-    float more_fish_delay = 5;
+    float more_fish_delay = 15;
     float more_fish_counter = 0;
     // Use this for initialization
     public float delay = 10;
