@@ -96,6 +96,7 @@ public class Player : MonoBehaviour {
             Destroy(coll.gameObject);
         } else if (coll.gameObject.tag == "PowerupBlock") {
             ++powerup_points;
+            HUB.S.UpdateWeapon();
             Destroy(coll.gameObject);
         } else if ((coll.gameObject.tag == "EnemyBullet" || coll.gameObject.tag == "Enemy") && !invincible) {
             loseLife();

@@ -6,7 +6,7 @@ public class HUB : MonoBehaviour {
 
     public static HUB S;
 
-    public Text livesLeft, livesRight;
+    public Text livesLeft, livesRight, weaponLeft, weaponRight, powerupLeft, powerupRight;
     
 
     public void UpdateLives()
@@ -18,6 +18,22 @@ public class HUB : MonoBehaviour {
 
     }
 
+    public void UpdateWeapon()
+    {
+        int num = Player.players[0].upgrade_points;
+        weaponLeft.text = "POWER: " + num;
+        num = Player.players[1].upgrade_points;
+        weaponRight.text = "POWER: " + num;
+    }
+
+    public void UpdatePowerup()
+    {
+        int num = Player.players[0].powerup_points;
+        powerupLeft.text = "POWER: " + num;
+        num = Player.players[1].powerup_points;
+        powerupRight.text = "POWER: " + num;
+    }
+
     void Awake()
     {
         S = this;
@@ -26,6 +42,7 @@ public class HUB : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         UpdateLives();
+        UpdateWeapon();
 	}
 
 
