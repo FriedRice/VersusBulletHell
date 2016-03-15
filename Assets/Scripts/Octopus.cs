@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Octopus : MonoBehaviour
+public class Octopus : Enemy
 {
 
     public Sprite[] idle;
