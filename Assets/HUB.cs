@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class HUB : MonoBehaviour {
 
     public static HUB S;
 
-    public GameObject[] hearts1;
-    public GameObject[] hearts2;
+    public Text livesLeft, livesRight;
+    
 
     public void UpdateLives()
     {
+       
     }
 
     void Awake()

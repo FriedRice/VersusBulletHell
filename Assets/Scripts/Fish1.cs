@@ -72,7 +72,7 @@ public class Fish1 : Enemy {
             }
             float rng = Random.Range(-1f, 1f);
             GameObject g = Instantiate(bullet, ShootLoc.transform.position, transform.rotation) as GameObject;
-            g.transform.SetParent(gameObject.transform);
+            //g.transform.SetParent(gameObject.transform);
             g.GetComponent<Rigidbody2D>().AddForce(Vector2.down * bulletSpeed + Vector2.right * rng * bulletSpeed, ForceMode2D.Impulse);
         }
     }
