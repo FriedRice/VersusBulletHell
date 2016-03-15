@@ -14,16 +14,17 @@ public class Player1 : Player {
 
     const float X_MIN = -8.75f;
     const float X_MAX = -0.15f;
-    const float Y_MIN = -5.0f;
-    const float Y_MAX = 5.0f;
+    const float Y_MIN = -4.75f;
+    const float Y_MAX = 4.75f;
 
     void Awake() {
         S = this;
         Player.player_go_dict[S.gameObject] = S;
     }
 
-    public override Bounds getLevelBounds() {
-        return new Bounds(new Vector3((X_MAX + X_MIN) / 2, (Y_MAX + Y_MIN) / 2, 0f),
+    protected override void Start() {
+        base.Start();
+        level_bounds = new Bounds(new Vector3((X_MAX + X_MIN) / 2, (Y_MAX + Y_MIN) / 2, 0f),
             new Vector3(Mathf.Abs(X_MAX - X_MIN), Mathf.Abs(Y_MAX - Y_MIN), 1f));
     }
 

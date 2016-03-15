@@ -23,11 +23,7 @@ public class PlayerRotWeapon : PlayerWeapon {
 
         this.transform.localPosition = new Vector2(Mathf.Cos(current_angle) * max_width, this.transform.localPosition.y);
         if (!level_bounds.Contains(this.transform.position)) {
-            if (this.transform.position.x - level_bounds.center.x > 0f) {
-                this.transform.position = new Vector2(level_bounds.max.x, this.transform.position.y);
-            } else {
-                this.transform.position = new Vector2(level_bounds.min.x, this.transform.position.y);
-            }
+            this.transform.position = weapon_player.fitInLevelBounds(this.transform.position);
         }
     }
 
