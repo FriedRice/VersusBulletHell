@@ -105,6 +105,7 @@ public class Player : MonoBehaviour {
     public void loseLife() {
         Global.S.DestroyLevelEnemies(this.transform.position);
         --lives;
+        HUB.S.UpdateLives();
         if (lives == 0) {
             Destroy(this.gameObject);
         } else {
@@ -116,6 +117,7 @@ public class Player : MonoBehaviour {
                 StartCoroutine(blinkAvatar());
             }
         }
+
     }
 
     IEnumerator blinkAvatar() {
