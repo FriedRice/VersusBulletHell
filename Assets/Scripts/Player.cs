@@ -79,6 +79,16 @@ public class Player : MonoBehaviour {
         return new_position;
     }
 
+    void OnTriggerEnter2D(Collider2D coll) {
+        if (coll.gameObject.tag == "UpgradeBlock") {
+            ++upgrade_points;
+            Destroy(coll.gameObject);
+        } else if (coll.gameObject.tag == "PowerupBlock") {
+            ++powerup_points;
+            Destroy(coll.gameObject);
+        }
+    }
+
     protected virtual Vector2 getInputMovementVector() {
         return Vector2.zero;
     }
