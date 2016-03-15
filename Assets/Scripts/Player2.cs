@@ -19,6 +19,7 @@ public class Player2 : Player {
 
     void Awake() {
         S = this;
+        Player.players[1] = S;
         Player.player_go_dict[S.gameObject] = S;
     }
 

@@ -8,16 +8,23 @@ public class Global : MonoBehaviour {
     public static event DestroyBullets DestroyLeftBullets;
     public static event DestroyBullets DestroyRightBullets;
 
-    void DestroyLeft()
-    {
-        DestroyLeftBullets();
-    }
+    public void DestroyLevelEnemies(Vector2 position) {
+        bool on_left = position.x < 0;
+        if (on_left) {
+            DestroyLeftBullets();
+        } else {
+            DestroyRightBullets();
+        }
 
-    void DestroyRight()
-    {
-        DestroyRightBullets();
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies) {
+            if (on_left && enemy.transform.position.x < 0) {
+                Destroy(enemy);
+            } else if (!on_left && enemy.transform.position.x > 0) {
+                Destroy(enemy);
+            }
+        }
     }
-
 
     void Awake()
     {
