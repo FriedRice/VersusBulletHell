@@ -9,7 +9,7 @@ public class EventIndicator : MonoBehaviour {
     public GameObject back_panel;
     Color normal_color;
     public static EventIndicator Panels;
-    public float delay = 4;
+    public float delay = 15;
     float timer = 0;
     // Use this for initialization
     void Start() {
