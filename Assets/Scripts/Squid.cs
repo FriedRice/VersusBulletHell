@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Squid : MonoBehaviour {
+public class Squid : Enemy {
     public Sprite[] idle;
     public float animspeed = 0.1f;
 
