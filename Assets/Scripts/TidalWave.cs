@@ -10,6 +10,7 @@ public class TidalWave : MonoBehaviour {
 	public float speedMin = 4;
 	public float speedMax = 7;
 	float speed;
+    Rigidbody2D rigid;
 
 	// Use this for initialization
 	void Start () {
@@ -21,10 +22,11 @@ public class TidalWave : MonoBehaviour {
 		speed = Random.Range (speedMin, speedMax);
 		float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 		transform.rotation = Quaternion.AngleAxis(angle - 90f, Vector3.forward);
-        GetComponent<Rigidbody2D>().velocity = speed * direction;
+        rigid = GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        rigid.velocity = speed * direction.normalized;
 	}
 }

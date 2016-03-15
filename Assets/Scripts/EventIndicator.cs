@@ -12,9 +12,7 @@ public class EventIndicator : MonoBehaviour {
     public float delay = 15;
     float timer = 0;
 
-    void Awake()
-    {
-
+    void Awake() {
         Panels = this.GetComponent<EventIndicator>();
     }
 
@@ -24,8 +22,6 @@ public class EventIndicator : MonoBehaviour {
         panel2 = transform.Find("EventPanel").Find("p2").gameObject;
         back_panel = transform.Find("back").gameObject;
         normal_color = back_panel.GetComponent<Renderer>().material.color;
-        Panels = this.GetComponent<EventIndicator>();
-
     }
 
     // Update is called once per frame
@@ -36,14 +32,16 @@ public class EventIndicator : MonoBehaviour {
             timer = 0;
         }
     }
-  public  void ResetPanel() {
-      back_panel.GetComponent<Renderer>().material.color = normal_color;
+
+    public void ResetPanel() {
+        back_panel.GetComponent<Renderer>().material.color = normal_color;
     }
-    public void SetPanel(int panel_num = 0) {
+
+    public void SetPanel(int panel_num) {
+        //if (panel_num == 0) {
+         //   back_panel.GetComponent<Renderer>().material.color = normal_color;
+        //}
         if (panel_num == 0) {
-            back_panel.GetComponent<Renderer>().material.color = normal_color;
-        }
-        if (panel_num != 0) {
             panel1.GetComponent<Renderer>().material = panels[panel_num];
             panel2.GetComponent<Renderer>().material = panels[panel_num];
             Color temp = normal_color * 0.3f;

@@ -26,16 +26,19 @@ public class Global : MonoBehaviour {
             }
         }
     }
+
     public GameObject wave;
     public GameObject warning;
     IEnumerator makewaves()
     {
         while (true)
         {
+            float interval = Random.Range(15f, 30f);
+            yield return new WaitForSeconds(interval);
             warning.SetActive(true);
+            EventIndicator.Panels.SetPanel(0);
             yield return new WaitForSeconds(2f);
-            int rand = Random.Range(9, 20);
-            float interval = Random.Range(3f, 20f);
+            int rand = Random.Range(10, 20);
 
             for (int c = 0; c < rand; ++c)
             {
@@ -44,7 +47,6 @@ public class Global : MonoBehaviour {
                 Instantiate(wave, new Vector3(xpos, ypos, 0f), transform.rotation);
             }
             warning.SetActive(false);
-            yield return new WaitForSeconds(interval - 2f);
         }
     }
 
