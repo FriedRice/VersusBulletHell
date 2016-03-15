@@ -18,6 +18,8 @@ public class Player : MonoBehaviour {
     public bool invincible;
 
     public float move_speed = 10f;
+    public float move_slow_speed = 4f;
+    public GameObject hit_box_marker;
     protected Bounds level_bounds;
     Rigidbody2D rigid;
     SpriteRenderer sprite_renderer;
@@ -33,6 +35,7 @@ public class Player : MonoBehaviour {
         upgrade_level = 0;
         invincible = false;
         blink_start_time = -9999999;
+        hit_box_marker.SetActive(false);
         for (int i = 1; i < weapon_upgrades.Length; ++i) {
             weapon_upgrades[i].SetActive(false);
         }
@@ -53,7 +56,17 @@ public class Player : MonoBehaviour {
         if (!level_bounds.Contains(this.transform.position)) {
             this.transform.position = fitInLevelBounds(this.transform.position);
         } else {
-            rigid.velocity = move_vector * move_speed;
+            if (getInputMoveSlow()) {
+                rigid.velocity = move_vector * move_slow_speed;
+                if (!hit_box_marker.activeSelf) {
+                    hit_box_marker.SetActive(true);
+                }
+            } else {
+                rigid.velocity = move_vector * move_speed;
+                if (hit_box_marker.activeSelf) {
+                    hit_box_marker.SetActive(false);
+                }
+            }
         }
     }
 
@@ -106,7 +119,7 @@ public class Player : MonoBehaviour {
     public void loseLife() {
         Global.S.DestroyLevelEnemies(this.transform.position);
         --lives;
-        //HUB.S.UpdateLives();
+        HUB.S.UpdateLives();
         for (int i = 1; i <= upgrade_level; ++i) {
             weapon_upgrades[i].SendMessage("disable");
             weapon_upgrades[i].SetActive(false);

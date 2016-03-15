@@ -8,7 +8,7 @@ public class Player2 : Player {
     const KeyCode P2_MOVE_LEFT_KEY = KeyCode.LeftArrow;
     const KeyCode P2_MOVE_RIGHT_KEY = KeyCode.RightArrow;
     const KeyCode P2_MOVE_DOWN_KEY = KeyCode.DownArrow;
-    const KeyCode P2_MOVE_SLOW_KEY = KeyCode.Greater;
+    const KeyCode P2_MOVE_SLOW_KEY = KeyCode.Period;
     const KeyCode P2_FIRE_KEY = KeyCode.Slash;
     const KeyCode P2_POWER_KEY = KeyCode.RightShift;
 

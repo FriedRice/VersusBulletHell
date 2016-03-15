@@ -97,7 +97,11 @@ public class Fish1 : Enemy {
             CalculateNextPosition();
         }
         if (side == -1) {
-            Vector3 temp = transform.parent.Find("RightFish").transform.position;
+            Transform right_fish = transform.parent.Find("RightFish");
+            if (right_fish == null) {
+                return;
+            }
+            Vector3 temp = right_fish.transform.position;
             temp.x = temp.x * -1;
             transform.position = temp;
             return;
