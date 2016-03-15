@@ -11,7 +11,11 @@ public class HUB : MonoBehaviour {
 
     public void UpdateLives()
     {
-       
+        int lives1 = Player.players[0].lives;
+        int lives2 = Player.players[1].lives;
+        livesLeft.text = "x" + lives1;
+        livesRight.text = "x" + lives2;
+
     }
 
     void Awake()
@@ -21,7 +25,7 @@ public class HUB : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        UpdateLives();
 	}
 
 
