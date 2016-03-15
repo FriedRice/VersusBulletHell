@@ -44,7 +44,7 @@ public class EventIndicator : MonoBehaviour {
         if (panel_num == 0) {
             panel1.GetComponent<Renderer>().material = panels[panel_num];
             panel2.GetComponent<Renderer>().material = panels[panel_num];
-            Color temp = normal_color * 0.3f;
+            Color temp = normal_color * 0.1f;
             back_panel.GetComponent<Renderer>().material.color = temp;
             Invoke("ResetPanel", 3);
         }
