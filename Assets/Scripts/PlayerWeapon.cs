@@ -25,8 +25,7 @@ public class PlayerWeapon : MonoBehaviour {
 	void Update () {
         if (gameObject.activeSelf && !added_to_fire_delegate) {
             weapon_player.fireDelegate += Fire;
-        } else if (!gameObject.activeSelf && added_to_fire_delegate) {
-            weapon_player.fireDelegate -= Fire;
+            added_to_fire_delegate = true;
         }
         updatePosition();	
 	}
@@ -37,6 +36,11 @@ public class PlayerWeapon : MonoBehaviour {
 
     public virtual void reset() {
         return;
+    }
+
+    public void disable() {
+        weapon_player.fireDelegate -= Fire;
+        added_to_fire_delegate = false;
     }
 
     public void Fire() { 
