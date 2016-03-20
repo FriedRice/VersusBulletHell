@@ -84,12 +84,7 @@ public class Fish1 : Enemy {
         float x = Random.Range(movementBoundXLeft, movementBoundXright);
         float y = Random.Range(movementBoundYBot, movementBoundYTop);
         nextdest = new Vector3(x, y, transform.position.z);
-        /*
-        if (side == -1) {
-            nextdest = transform.parent.Find("RightFish").gameObject.GetComponent<Fish1>().nextdest;
-            nextdest.x = nextdest.x * -1;
-        }
-         * */
+
     }
 
 	// Update is called once per frame
@@ -98,16 +93,7 @@ public class Fish1 : Enemy {
         {
             CalculateNextPosition();
         }
-        Transform RF = transform.parent.Find("RightFish");
-        if (side == -1 && RF!=null) {
-            Vector3 temp = transform.parent.Find("RightFish").transform.position;
-            temp.x = temp.x * -1;
-            temp.z = transform.position.z;
-            transform.position = temp;
-            return;
-
-        }
-        Vector3 to_point = nextdest - transform.position;
+       Vector3 to_point = nextdest - transform.position;
        if(to_point.magnitude> 0.5) transform.position += Vector3.Normalize(to_point) / 1000 *Speed ;
        else {
            transform.position += Vector3.Normalize(to_point) * to_point.magnitude/2f/1000*Speed;

@@ -12,8 +12,8 @@ public class Player2 : Player {
     const KeyCode P2_FIRE_KEY = KeyCode.Slash;
     const KeyCode P2_POWER_KEY = KeyCode.RightShift;
 
-    const float X_MIN = 0.15f;
-    const float X_MAX = 8.75f;
+    const float X_MIN = -4.4f;
+    const float X_MAX = 4.4f;
     const float Y_MIN = -4.75f;
     const float Y_MAX = 4.75f;
     int my_number = 2;
@@ -41,8 +41,8 @@ public class Player2 : Player {
 
     protected override Vector2 getInputMovementVector() {
         Vector2 move_vector = Vector2.zero;
-        move_vector.x += Input.GetAxis(my_inputs.hor);
-        move_vector.y += Input.GetAxis(my_inputs.vert);
+        move_vector.x += Input.GetAxis(my_inputs.hor)*-1;
+        move_vector.y += Input.GetAxis(my_inputs.vert)*-1;
 /*
         Vector2 move_vector = Vector2.zero;
         if (Input.GetKey(P2_MOVE_UP_KEY)) {

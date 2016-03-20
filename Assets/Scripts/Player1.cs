@@ -3,17 +3,8 @@ using System.Collections;
 
 public class Player1 : Player {
     public static Player1 S;
-
-    const KeyCode P1_MOVE_UP_KEY = KeyCode.T;
-    const KeyCode P1_MOVE_LEFT_KEY = KeyCode.F;
-    const KeyCode P1_MOVE_RIGHT_KEY = KeyCode.H;
-    const KeyCode P1_MOVE_DOWN_KEY = KeyCode.G;
-    const KeyCode P1_MOVE_SLOW_KEY = KeyCode.LeftShift;
-    const KeyCode P1_FIRE_KEY = KeyCode.Z;
-    const KeyCode P1_POWER_KEY = KeyCode.X;
-
-    const float X_MIN = -8.75f;
-    const float X_MAX = -0.15f;
+    const float X_MIN = -4.4f;
+    const float X_MAX = 4.4f;
     const float Y_MIN = -4.75f;
     const float Y_MAX = 4.75f;
     int my_number = 1;
@@ -44,21 +35,6 @@ public class Player1 : Player {
         move_vector.x += Input.GetAxis(my_inputs.hor);
         move_vector.y += Input.GetAxis(my_inputs.vert);
 
-    /*
-        if (Input.GetKey(P1_MOVE_UP_KEY)) {
-            move_vector.y += 1;
-        }  
-        if (Input.GetKey(P1_MOVE_DOWN_KEY)) {
-            move_vector.y -= 1;
-        }  
-        if (Input.GetKey(P1_MOVE_RIGHT_KEY)) {
-            move_vector.x += 1;
-        }  
-        if (Input.GetKey(P1_MOVE_LEFT_KEY)) {
-            move_vector.x -= 1;
-        }
-     * */
-        //return move_vector.normalized;
         return move_vector;
     }
 
