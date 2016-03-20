@@ -28,7 +28,8 @@ public class Spawner : MonoBehaviour {
         left_cam = GameObject.Find("Cam3dLeft");
         right_cam = GameObject.Find("Cam3dRight");
     }
-    void Toggle3d_left() {
+
+    /*void Toggle3d_left() {
         left_cam.GetComponent<Cam3d>().toggle_3d(mode_3d_left);
         if (left_in_3d) {
             for (int i = units.Count - 1; i > -1; i--) {
@@ -65,7 +66,6 @@ public class Spawner : MonoBehaviour {
 
         }
     }
-    /*
     void Toggle3d_right() {
         right_cam.GetComponent<Cam3d>().toggle_3d(mode_3d_right);
         if (right_in_3d) {
@@ -104,6 +104,7 @@ public class Spawner : MonoBehaviour {
         }
     }
      */
+
     void MakeFish() {
         GameObject enemy = Instantiate(fish_list[Random.Range(0, fish_list.Count)]) as GameObject;
         float x = Random.Range(transform.position.x - transform.localScale.x / 2, transform.position.x + transform.localScale.x / 2);
@@ -154,7 +155,5 @@ public class Spawner : MonoBehaviour {
                 units.RemoveAt(i);
             }
         }
-
-
     }
 }
