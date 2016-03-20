@@ -28,6 +28,11 @@ public class Player : MonoBehaviour {
     public delegate void WeaponFireDelegate();
     public WeaponFireDelegate fireDelegate;
 
+    public AudioClip fireSound1;
+    public AudioClip fireSound2;
+    public AudioClip powerupSound;
+    public AudioClip upgradeSound;
+
     // Use this for initialization
     protected virtual void Start () {
         rigid = GetComponent<Rigidbody2D>();
@@ -47,8 +52,13 @@ public class Player : MonoBehaviour {
         updateUpgrade();
 
         if (getInputFire() && fireDelegate != null) {
+            if (!SoundManager.instance.efxSource.isPlaying)
+            {
+                SoundManager.instance.RandomizeSfx(fireSound1, fireSound2);
+            }
             fireDelegate();
         }
+        
     }
     public int POWERUPTHRESHOLD = 25;
     public bool hasPowerup = false;
@@ -95,7 +105,6 @@ public class Player : MonoBehaviour {
                     Instantiate(LASER, players[1].transform.position, transform.rotation);
                 } else
                 {
-
                     Instantiate(LASER, players[0].transform.position, transform.rotation);
                 }
             }
@@ -138,9 +147,11 @@ public class Player : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D coll) {
         if (coll.gameObject.tag == "UpgradeBlock") {
+            SoundManager.instance.PlaySingle(upgradeSound);
             ++upgrade_points;
             Destroy(coll.gameObject);
         } else if (coll.gameObject.tag == "PowerupBlock") {
+            SoundManager.instance.PlaySingle(powerupSound);
             ++powerup_points;
             HUB.S.UpdateWeapon();
             Destroy(coll.gameObject);
