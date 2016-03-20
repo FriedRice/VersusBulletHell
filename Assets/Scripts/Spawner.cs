@@ -17,8 +17,8 @@ public class Spawner : MonoBehaviour {
     public float rot_3d = 80;
     public float height_3d = -1;
     GameObject left_cam, right_cam;
-    const float boundX = 5;
-   const float boundY = 7;
+    const float BOUND_X = 5;
+    const float BOUND_Y = 10;
 
     void Start() {
         timer = delay - 3;
@@ -122,18 +122,24 @@ public class Spawner : MonoBehaviour {
                 left_fish.GetComponent<Enemy>().Initialize(temp);
             }
              */
-        } else
+        }
+        else {
             Destroy(enemy);
-        if (delay > 1)
+        }
+
+        if (delay > 1) {
             delay -= 0.3f;
-        if (more_fish_counter < more_fish_delay)
+        }
+
+        if (more_fish_counter < more_fish_delay) {
             more_fish_counter++;
+        }
         else {
             //  max_fish++;
             more_fish_counter = 0;
         }
-
     }
+
     // Update is called once per frame
     void Update() {
         timer += Time.deltaTime;
@@ -142,7 +148,7 @@ public class Spawner : MonoBehaviour {
             MakeFish();
         }
         for (int i = units.Count - 1; i > -1; i--) {
-            if (units[i] == null || units[i].transform.position.y < 7 * side_indicator) {
+            if (units[i] == null || Mathf.Abs(units[i].transform.position.y) > BOUND_Y) {
                 if (units[i] != null)
                     Destroy(units[i]);
                 units.RemoveAt(i);

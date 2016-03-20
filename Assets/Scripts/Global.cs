@@ -52,6 +52,7 @@ public class Global : MonoBehaviour {
 
     void Awake()
     {
+        Debug.Log("Displays connected: " + Display.displays.Length);
         S = this;
     }
 
