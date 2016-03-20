@@ -13,7 +13,7 @@ public class Squid : Enemy {
     public float movementBoundXLeft, movementBoundXright, movementBoundYTop, movementBoundYBot;
 
     public float bulletSpeed = 4f;
-
+    public Sprite bear_sprite;
     public GameObject greenPowerup, bluePowerup;
     public int HEALTH = 55;
     void Die()
@@ -54,6 +54,8 @@ public class Squid : Enemy {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         StartCoroutine(animate());
+        if (transform.position.y > 0)
+            sr.sprite = bear_sprite;
        //CalculateNextPosition();
     }
 

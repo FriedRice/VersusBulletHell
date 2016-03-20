@@ -16,7 +16,7 @@ public class Octopus : Enemy
     public float movementBoundXLeft, movementBoundXright, movementBoundYTop, movementBoundYBot;
 
     public float bulletSpeed = 4f;
-
+    public Sprite bear_sprite;
     public int HEALTH = 15;
 
     void Die()
@@ -59,6 +59,8 @@ public class Octopus : Enemy
         sr = GetComponent<SpriteRenderer>();
         StartCoroutine(animate());
         rb.AddForce(Vector3.down * Time.deltaTime * Speed, ForceMode2D.Impulse);
+        if (transform.position.y > 0)
+            sr.sprite = bear_sprite;
         //CalculateNextPosition();
     }
 

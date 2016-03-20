@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+
 public class Spawner : MonoBehaviour {
     public List<GameObject> fish_list;
     public List<GameObject> units;
@@ -25,8 +26,8 @@ public class Spawner : MonoBehaviour {
 
     }
     void Awake() {
-        left_cam = GameObject.Find("Cam3dLeft");
-        right_cam = GameObject.Find("Cam3dRight");
+        left_cam = GameObject.Find("CamLeft");
+        right_cam = GameObject.Find("CamRight");
     }
 
     /*void Toggle3d_left() {
@@ -106,6 +107,7 @@ public class Spawner : MonoBehaviour {
      */
 
     void MakeFish() {
+        print("making fish");
         GameObject enemy = Instantiate(fish_list[Random.Range(0, fish_list.Count)]) as GameObject;
         float x = Random.Range(transform.position.x - transform.localScale.x / 2, transform.position.x + transform.localScale.x / 2);
         float y = Random.Range(transform.position.y - transform.localScale.y / 2, transform.position.y + transform.localScale.y / 2);
