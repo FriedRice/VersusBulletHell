@@ -14,9 +14,14 @@ public class Fish1 : Enemy {
 
     public float bulletSpeed = 4f;
 
+    public int HEALTH = 15;
+    public GameObject greenPowerup, bluePowerup;
     public Sprite bear_sprite;
+    public Vector3 nextdest;
+
     Rigidbody2D rb;
     SpriteRenderer sr;
+
     // Use this for initialization
     void Start() {
         sr = GetComponent<SpriteRenderer>();
@@ -25,8 +30,8 @@ public class Fish1 : Enemy {
         rb = GetComponent<Rigidbody2D>();
         if (transform.position.y > 0)
             sr.sprite = bear_sprite;
-    
     }
+
     void Die() {
         int rng = Mathf.CeilToInt(Random.Range(0f, 10f));
         for (int c = 0; c < rng; ++c) {
@@ -41,8 +46,7 @@ public class Fish1 : Enemy {
         }
         Destroy(gameObject);
     }
-    public int HEALTH = 15;
-    public GameObject greenPowerup, bluePowerup;
+
     public void OnTriggerEnter2D(Collider2D collision) {
         if (collision.tag == "PlayerBullet") {
             HEALTH -= 1;
@@ -52,6 +56,7 @@ public class Fish1 : Enemy {
             }
         }
     }
+
     IEnumerator animate() {
         while (true) {
             bool foxes_have_animation = false;
@@ -65,8 +70,7 @@ public class Fish1 : Enemy {
                     sr.sprite = idle[c];
                     yield return new WaitForSeconds(animspeed);
                 }
-            } else
-            {
+            } else {
                 yield return new WaitForSeconds(animspeed);
             }
 
@@ -79,8 +83,6 @@ public class Fish1 : Enemy {
             g.GetComponent<Rigidbody2D>().AddForce(shoot_dir * bulletSpeed + Vector2.right * rng * bulletSpeed, ForceMode2D.Impulse);
         }
     }
-
-    public Vector3 nextdest;
 
     void CalculateNextPosition() {
         float x = Random.Range(movementBoundXLeft, movementBoundXright);
@@ -95,14 +97,13 @@ public class Fish1 : Enemy {
             CalculateNextPosition();
         }
         Vector3 to_point = nextdest - transform.position;
-        if (to_point.magnitude > 0.5)
+        if (to_point.magnitude > 0.5) {
             transform.position += Vector3.Normalize(to_point) / 1000 * Speed;
-        else {
+        } else {
             transform.position += Vector3.Normalize(to_point) * to_point.magnitude / 2f / 1000 * Speed;
         }
-
-
     }
+
     void FixedUpdate() {
         // rb.AddForce( Vector3.Normalize(nextdest - transform.position)  * Speed, ForceMode2D.Force);
     }
