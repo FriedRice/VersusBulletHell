@@ -50,7 +50,7 @@ public class Octopus : Enemy {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         StartCoroutine(animate());
-        rb.AddForce(Vector3.down * Time.deltaTime * Speed, ForceMode2D.Impulse);
+ //       rb.AddForce(Vector3.down * Time.deltaTime * Speed, ForceMode2D.Impulse);
         if (transform.position.y > 0)
             sr.sprite = bear_sprite;
         //CalculateNextPosition();
@@ -84,6 +84,10 @@ public class Octopus : Enemy {
 
     // Update is called once per frame
     void Update() {
-
+        if (spawn_position.y > 0) {
+            rb.AddForce(Vector3.down * Time.deltaTime * Speed, ForceMode2D.Force);
+        } else {
+            rb.AddForce(Vector3.up * Time.deltaTime * Speed, ForceMode2D.Force);
+        }
     }
 }

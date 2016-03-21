@@ -107,7 +107,7 @@ public class Spawner : MonoBehaviour {
      */
 
     void MakeFish() {
-        print("making fish");
+       // print("making fish");
         GameObject enemy = Instantiate(fish_list[Random.Range(0, fish_list.Count)]) as GameObject;
         float x = Random.Range(transform.position.x - transform.localScale.x / 2, transform.position.x + transform.localScale.x / 2);
         float y = Random.Range(transform.position.y - transform.localScale.y / 2, transform.position.y + transform.localScale.y / 2);

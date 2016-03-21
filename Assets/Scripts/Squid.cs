@@ -73,7 +73,13 @@ public class Squid : Enemy {
 
     // Update is called once per frame
     void Update() {
-        rb.AddForce(Vector3.down * Time.deltaTime * Speed, ForceMode2D.Force);
+
+        if (spawn_position.y > 0) {
+            rb.AddForce(Vector3.down * Time.deltaTime * Speed, ForceMode2D.Force);
+        } else {
+            rb.AddForce(Vector3.up * Time.deltaTime * Speed, ForceMode2D.Force);
+        }
+
 
     }
 }
