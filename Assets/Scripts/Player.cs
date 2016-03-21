@@ -105,19 +105,28 @@ public class Player : MonoBehaviour {
         {
             if (hasPowerup)
             {
-                PowerupName = "None";
-                powerup_points = 0;
-                hasPowerup = false;
-                if(gameObject.transform.position.x < 0)
-                {
-                    Instantiate(LASER, players[1].transform.position, transform.rotation);
-                } else
-                {
-                    Instantiate(LASER, players[0].transform.position, transform.rotation);
-                }
+                FireLaser();
             }
         }
         HUB.S.UpdatePowerup();
+    }
+
+    void FireLaser()
+    {
+        PowerupName = "None";
+        powerup_points = 0;
+        hasPowerup = false;
+        GameObject g = Instantiate(LASER, new Vector3(transform.position.x, 0, 0), transform.rotation) as GameObject;
+        if (this == players[0])
+        {
+            // u r fish
+            g.GetComponent<Laser>().ISBEAR = false;
+        }
+        else
+        {
+            // u r ber
+            g.GetComponent<Laser>().ISBEAR = true;
+        }
     }
 
     void updateUpgrade() {
