@@ -121,6 +121,7 @@ public class Player : MonoBehaviour {
         {
             // u r fish
             g.GetComponent<Laser>().ISBEAR = false;
+            g.transform.GetChild(0).GetComponent<ParticleSystem>().startColor = Color.red;
         }
         else
         {
