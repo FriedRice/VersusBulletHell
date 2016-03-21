@@ -17,6 +17,8 @@ public class Player : MonoBehaviour {
     public int powerup_points;
     public bool invincible;
 
+    public bool controlsAreReversed = false;
+
     public float move_speed = 10f;
     public float move_slow_speed = 4f;
     public GameObject hit_box_marker;
@@ -74,6 +76,10 @@ public class Player : MonoBehaviour {
     public GameObject LASER;
     void updateMovement() {
         Vector2 move_vector = getInputMovementVector();
+        if (controlsAreReversed)
+        {
+            move_vector = -move_vector;
+        }
         if (!level_bounds.Contains(this.transform.position)) {
             this.transform.position = fitInLevelBounds(this.transform.position);
             rigid.velocity = Vector2.zero;
@@ -105,10 +111,30 @@ public class Player : MonoBehaviour {
         {
             if (hasPowerup)
             {
-                FireLaser();
+                ReverseControlsOther();
             }
         }
         HUB.S.UpdatePowerup();
+    }
+
+    void ReverseControlsOther()
+    {
+        PowerupName = "None";
+        powerup_points = 0;
+        hasPowerup = false;
+        if(this == players[0])
+        {
+            HUB.S.FishUsedPowerupEffect();
+            // u r fish
+            GameObject g = Instantiate(Resources.Load("Reverser"), transform.position, transform.rotation) as GameObject;
+            g.GetComponent<ReverseControls>().Fish = false;
+        } else
+        {
+            HUB.S.BearUsedPowerupEffect();
+            // u r bear
+            GameObject g = Instantiate(Resources.Load("Reverser"), transform.position, transform.rotation) as GameObject;
+            g.GetComponent<ReverseControls>().Fish = true;
+        }
     }
 
     void FireLaser()
