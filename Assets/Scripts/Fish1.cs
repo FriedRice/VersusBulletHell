@@ -65,6 +65,9 @@ public class Fish1 : Enemy {
                     sr.sprite = idle[c];
                     yield return new WaitForSeconds(animspeed);
                 }
+            } else
+            {
+                yield return new WaitForSeconds(animspeed);
             }
 
             float rng = Random.Range(-1f, 1f);
