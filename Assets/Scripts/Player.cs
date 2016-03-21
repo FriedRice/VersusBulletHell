@@ -121,12 +121,14 @@ public class Player : MonoBehaviour {
         {
             // u r fish
             g.GetComponent<Laser>().ISBEAR = false;
+            HUB.S.FishUsedPowerupEffect();
             g.transform.GetChild(0).GetComponent<ParticleSystem>().startColor = Color.red;
         }
         else
         {
             // u r ber
             g.GetComponent<Laser>().ISBEAR = true;
+            HUB.S.BearUsedPowerupEffect();
         }
     }
 

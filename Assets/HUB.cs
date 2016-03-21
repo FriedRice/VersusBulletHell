@@ -7,7 +7,8 @@ public class HUB : MonoBehaviour {
     public static HUB S;
 
     public Text livesLeft, livesRight, weaponLeft, weaponRight, powerupLeft, powerupRight;
-    
+    public GameObject BearShink, FishShink;
+    public Image flash;
 
     public void UpdateLives()
     {
@@ -43,6 +44,50 @@ public class HUB : MonoBehaviour {
         UpdateLives();
         UpdateWeapon();
 	}
+
+    IEnumerator animateFish()
+    {
+
+        FishShink.SetActive(true);
+        Color c = flash.color;
+        c.a = 1;
+        flash.color = c;
+        for(int d = 0; d < 5; ++d)
+        {
+            yield return new WaitForSeconds(0.01f);
+            c.a -= 0.2f;
+            flash.color = c;
+        }
+        yield return new WaitForSeconds(0.5f);
+        FishShink.SetActive(false);
+    }
+
+    IEnumerator animateBear()
+    {
+        BearShink.SetActive(true);
+        Color c = flash.color;
+        c.a = 1;
+        flash.color = c;
+        for (int d = 0; d < 5; ++d)
+        {
+            yield return new WaitForSeconds(0.05f);
+            c.a -= 0.2f;
+            flash.color = c;
+        }
+        yield return new WaitForSeconds(0.5f);
+        BearShink.SetActive(false);
+    }
+
+    public void FishUsedPowerupEffect()
+    {
+        StartCoroutine(animateFish());
+    }
+
+    public void BearUsedPowerupEffect()
+    {
+
+        StartCoroutine(animateBear());
+    }
 
 
 	
