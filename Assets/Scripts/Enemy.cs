@@ -26,15 +26,16 @@ public class Enemy : MonoBehaviour {
         if (new_spawn_pos.y < 0) {
             transform.Rotate(Vector3.forward, 180);
             layer_prefix = FISH_LAYER_PREFIX;
+            enemy_bullet_tag = BEAR_LAYER_PREFIX + ENEMY_BULLET_SUFFIX;
         } else {
             layer_prefix = BEAR_LAYER_PREFIX;
+            enemy_bullet_tag = FISH_LAYER_PREFIX + ENEMY_BULLET_SUFFIX;
         }
 
         gameObject.tag = layer_prefix + ALLY_LAYER_SUFFIX;
         gameObject.layer = LayerMask.NameToLayer(layer_prefix + ALLY_LAYER_SUFFIX);
         bullet_tag = layer_prefix + BULLET_LAYER_SUFFIX;
         bullet_layer = LayerMask.NameToLayer(bullet_tag);
-        enemy_bullet_tag = layer_prefix + ENEMY_BULLET_SUFFIX;
     }
 
     protected void setBulletLayerAndTag(GameObject bullet) {
