@@ -9,10 +9,18 @@ public class MainMenu : MonoBehaviour {
     public GameObject title1, title2;
     public GameObject button;
     public GameObject background;
+    public AudioClip whoosh1, whoosh2;
 	// Use this for initialization
 	void Start () {
+        StartCoroutine(animatewoosh());
         audio.Pause();
 	}
+    IEnumerator animatewoosh()
+    {
+        AudioSource.PlayClipAtPoint(whoosh1, Camera.main.transform.position, 1f);
+        yield return new WaitForSeconds(0.1f);
+        AudioSource.PlayClipAtPoint(whoosh2, Camera.main.transform.position, 1f);
+    }
     bool title2move = false;
     IEnumerator animate()
     {
