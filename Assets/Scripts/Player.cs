@@ -67,6 +67,7 @@ public class Player : MonoBehaviour {
         }
         
     }
+
     public int POWERUPTHRESHOLD = 25;
     public bool hasPowerup = false;
     public string PowerupName = "None";
@@ -184,7 +185,7 @@ public class Player : MonoBehaviour {
             if ((Time.time - blink_start_time) < blink_time) {
                 blink_start_time = Time.time;
             } else {
-                invincible = true;
+                toggleInvincible(true);
                 blink_start_time = Time.time;
                 StartCoroutine(blinkAvatar());
             }
@@ -208,7 +209,11 @@ public class Player : MonoBehaviour {
             sprite_color.a = 255;
             sprite_renderer.color = sprite_color;
         }
-        invincible = false;
+        toggleInvincible(false);
+    }
+
+    protected virtual void toggleInvincible(bool enable) {
+        return;
     }
 
     protected virtual bool isEnemyAllyTag(string tag) {

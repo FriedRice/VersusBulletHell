@@ -40,6 +40,12 @@ public class Player1 : Player {
         return tag == ENEMY_ALLY_TAG || tag == ENEMY_ALLY_BULLET_TAG;
     }
 
+    protected override void toggleInvincible(bool enable) {
+        base.invincible = enable;
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer(ENEMY_ALLY_TAG), enabled);
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer(ENEMY_ALLY_BULLET_TAG), enabled);
+    }
+
     protected override Vector2 getInputMovementVector() {
         Vector2 move_vector = Vector2.zero;
         move_vector.x += Input.GetAxis(my_inputs.hor);

@@ -70,6 +70,12 @@ public class Player2 : Player {
         return tag == ENEMY_ALLY_TAG || tag == ENEMY_ALLY_BULLET_TAG;
     }
 
+    protected override void toggleInvincible(bool enable) {
+        base.invincible = enable;
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer(ENEMY_ALLY_TAG), enable);
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer(ENEMY_ALLY_BULLET_TAG), enable);
+    }
+
     protected override bool getInputFire() {
         return //Input.GetKey(P1_FIRE_KEY);
         Input.GetAxis(my_inputs.fire2) > 0;
