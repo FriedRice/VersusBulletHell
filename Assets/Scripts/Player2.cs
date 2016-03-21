@@ -2,6 +2,9 @@
 using System.Collections;
 
 public class Player2 : Player {
+    const string ENEMY_ALLY_TAG = "FishAlly";
+    const string ENEMY_ALLY_BULLET_TAG = "FishAllyBullet";
+
     public static Player2 S;
 
     const KeyCode P2_MOVE_UP_KEY = KeyCode.UpArrow;
@@ -63,10 +66,13 @@ public class Player2 : Player {
         return move_vector;
     }
 
+    protected override bool isEnemyAllyTag(string tag) {
+        return tag == ENEMY_ALLY_TAG || tag == ENEMY_ALLY_BULLET_TAG;
+    }
+
     protected override bool getInputFire() {
         return //Input.GetKey(P1_FIRE_KEY);
         Input.GetAxis(my_inputs.fire2) > 0;
-
     }
 
     protected override bool getInputMoveSlow() {

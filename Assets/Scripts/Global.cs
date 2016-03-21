@@ -3,32 +3,26 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class Global : MonoBehaviour {
+    const string ALLY_LAYER_SUFFIX = "Ally";
+    const string ALLY_BULLET_LAYER_SUFFIX = "AllyBullet";
+
     public static Global S;
-
-    public delegate void DestroyBullets();
-    public static event DestroyBullets DestroyLeftBullets;
-    public static event DestroyBullets DestroyRightBullets;
-
-    public void DestroyLevelEnemies(Vector2 position) {
-        bool on_left = position.x < 0;
-        if (on_left) {
-            DestroyLeftBullets();
-        } else {
-            DestroyRightBullets();
-        }
-
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemies) {
-            if (on_left && enemy.transform.position.x < 0) {
-                Destroy(enemy);
-            } else if (!on_left && enemy.transform.position.x > 0) {
-                Destroy(enemy);
-            }
-        }
-    }
 
     public GameObject wave;
     public GameObject warning;
+
+    public void destroyLevelEnemies(Vector2 position, string enemy_layer_prefix) {
+        GameObject[] enemy_bullets = GameObject.FindGameObjectsWithTag(enemy_layer_prefix + ALLY_BULLET_LAYER_SUFFIX);
+        foreach (GameObject enemy_bullet in enemy_bullets) {
+            enemy_bullet.SendMessage("Dissipate");
+        }
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemy_layer_prefix + ALLY_LAYER_SUFFIX);
+        foreach (GameObject enemy in enemies) {
+            Destroy(enemy);
+        }
+    }
+
     IEnumerator makewaves()
     {
         while (true)

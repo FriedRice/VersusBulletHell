@@ -36,7 +36,7 @@ public class Octopus : Enemy {
     }
 
     public void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.tag == "PlayerBullet") {
+        if (base.isEnemyBulletTag(collision.gameObject.tag)) {
             HEALTH -= 1;
             Destroy(collision.gameObject);
             if (HEALTH <= 0) {
@@ -61,6 +61,7 @@ public class Octopus : Enemy {
             float ANGLE = 0f;
             for (int c = 0; c < 25; ++c) {
                 GameObject g = Instantiate(bullet, ShootLoc.transform.position, Quaternion.Euler(0f, 0f, ANGLE)) as GameObject;
+                base.setBulletLayerAndTag(g);
                 //g.transform.SetParent(gameObject.transform);
                 g.GetComponent<Rigidbody2D>().AddForce(g.transform.up * bulletSpeed);
                 ANGLE += 14.4f;
@@ -70,6 +71,7 @@ public class Octopus : Enemy {
             ANGLE = 90f;
             for (int c = 0; c < 25; ++c) {
                 GameObject g = Instantiate(bullet, ShootLoc.transform.position, Quaternion.Euler(0f, 0f, ANGLE)) as GameObject;
+                base.setBulletLayerAndTag(g);
                 //g.transform.SetParent(gameObject.transform);
                 g.GetComponent<Rigidbody2D>().AddForce(g.transform.up * bulletSpeed);
                 ANGLE += 14.4f;

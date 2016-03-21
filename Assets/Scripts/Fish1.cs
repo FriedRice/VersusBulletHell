@@ -48,7 +48,7 @@ public class Fish1 : Enemy {
     }
 
     public void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.tag == "PlayerBullet") {
+        if (base.isEnemyBulletTag(collision.gameObject.tag)) {
             HEALTH -= 1;
             Destroy(collision.gameObject);
             if (HEALTH <= 0) {
@@ -76,6 +76,7 @@ public class Fish1 : Enemy {
 
             float rng = Random.Range(-1f, 1f);
             GameObject g = Instantiate(bullet, ShootLoc.transform.position, transform.rotation) as GameObject;
+            base.setBulletLayerAndTag(g);
             //g.transform.SetParent(gameObject.transform);
             Vector2 shoot_dir = Vector2.zero;
             shoot_dir.y = transform.up.y * -1;
@@ -88,7 +89,6 @@ public class Fish1 : Enemy {
         float x = Random.Range(movementBoundXLeft, movementBoundXright);
         float y = Random.Range(movementBoundYBot, movementBoundYTop);
         nextdest = new Vector3(x, y, transform.position.z);
-
     }
 
     // Update is called once per frame

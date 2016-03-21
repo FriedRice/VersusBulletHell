@@ -24,6 +24,7 @@ public class Player : MonoBehaviour {
     Rigidbody2D rigid;
     SpriteRenderer sprite_renderer;
     float blink_start_time;
+    string enemy_layer_prefix;
 
     public delegate void WeaponFireDelegate();
     public WeaponFireDelegate fireDelegate;
@@ -43,6 +44,12 @@ public class Player : MonoBehaviour {
         hit_box_marker.SetActive(false);
         for (int i = 1; i < weapon_upgrades.Length; ++i) {
             weapon_upgrades[i].SetActive(false);
+        }
+
+        if (gameObject.tag.StartsWith("Fish")) {
+            enemy_layer_prefix = "Bear";
+        } else {
+            enemy_layer_prefix = "Fish";
         }
 	}
 
@@ -155,13 +162,13 @@ public class Player : MonoBehaviour {
             ++powerup_points;
             HUB.S.UpdateWeapon();
             Destroy(coll.gameObject);
-        } else if ((coll.gameObject.tag == "EnemyBullet" || coll.gameObject.tag == "Enemy") && !invincible) {
+        } else if (isEnemyAllyTag(coll.gameObject.tag) && !invincible) {
             loseLife();
         }
     }
 
     public void loseLife() {
-        Global.S.DestroyLevelEnemies(this.transform.position);
+        Global.S.destroyLevelEnemies(this.transform.position, enemy_layer_prefix);
         --lives;
         HUB.S.UpdateLives();
         for (int i = 1; i <= upgrade_level; ++i) {
@@ -182,7 +189,6 @@ public class Player : MonoBehaviour {
                 StartCoroutine(blinkAvatar());
             }
         }
-
     }
 
     IEnumerator blinkAvatar() {
@@ -203,6 +209,10 @@ public class Player : MonoBehaviour {
             sprite_renderer.color = sprite_color;
         }
         invincible = false;
+    }
+
+    protected virtual bool isEnemyAllyTag(string tag) {
+        return false;
     }
 
     protected virtual Vector2 getInputMovementVector() {

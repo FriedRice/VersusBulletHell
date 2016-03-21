@@ -17,23 +17,9 @@ public class BulletSprite : MonoBehaviour {
             LEFTBULLET = true;
         }
 
-        if (LEFTBULLET) {
-            Global.DestroyLeftBullets += Dissipate;
-        }
-        else {
-            Global.DestroyRightBullets += Dissipate;
-        }
         col = GetComponent<Collider2D>();
         sr = GetComponent<SpriteRenderer>();
         StartCoroutine(anim());
-    }
-
-    void OnDisable() {
-        if (LEFTBULLET) {
-            Global.DestroyLeftBullets -= Dissipate;
-        } else {
-            Global.DestroyRightBullets -= Dissipate;
-        }
     }
 
     IEnumerator anim() {
@@ -64,10 +50,6 @@ public class BulletSprite : MonoBehaviour {
             Destroy(gameObject);
         }
     }
-
-
-
-
 
     // Update is called once per frame
     void Update() {

@@ -2,16 +2,22 @@
 using System.Collections;
 
 public class Player1 : Player {
+    const string ENEMY_ALLY_TAG = "BearAlly";
+    const string ENEMY_ALLY_BULLET_TAG = "BearAllyBullet";
+
     public static Player1 S;
+
     const float X_MIN = -4.4f;
     const float X_MAX = 4.4f;
     const float Y_MIN = -4.75f;
     const float Y_MAX = 4.75f;
     int my_number = 1;
+
     struct controls {
         public string up, vert, hor;
         public string fire1, fire2, fire3;
     };
+
     controls my_inputs;
     void Awake() {
         S = this;
@@ -28,6 +34,10 @@ public class Player1 : Player {
         my_inputs.fire1 = string.Format("Fire1{0}", my_number);
         my_inputs.fire2 = string.Format("Fire2{0}", my_number);
         my_inputs.fire3 = string.Format("Fire3{0}", my_number);
+    }
+
+    protected override bool isEnemyAllyTag(string tag) {
+        return tag == ENEMY_ALLY_TAG || tag == ENEMY_ALLY_BULLET_TAG;
     }
 
     protected override Vector2 getInputMovementVector() {
