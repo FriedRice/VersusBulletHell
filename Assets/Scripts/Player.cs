@@ -97,21 +97,35 @@ public class Player : MonoBehaviour {
             }
         }
 
-        if(powerup_points >= POWERUPTHRESHOLD)
+        if(powerup_points >= POWERUPTHRESHOLD && !hasPowerup)
         {
             hasPowerup = true;
-            PowerupName = "Laser";
+            int rng = Random.Range(-1, 1);
+            if(rng == 0)
+            {
+                PowerupName = "Laser";
+            } else { PowerupName = "Reverse Controls"; }
         } else
         {
-            hasPowerup = false;
-            PowerupName = "None";
+            if (powerup_points < POWERUPTHRESHOLD)
+            {
+                hasPowerup = false;
+                PowerupName = "None";
+            }
         }
 
         if (getInputPower())
         {
             if (hasPowerup)
             {
-                ReverseControlsOther();
+                if(PowerupName == "Laser")
+                {
+                    FireLaser();
+                } else if (PowerupName == "Reverse Controls")
+                {
+
+                    ReverseControlsOther();
+                }
             }
         }
         HUB.S.UpdatePowerup();
