@@ -19,13 +19,19 @@ public class Whirlpool : MonoBehaviour {
             
             // apply force on target towards me
             float inverse = 1f / forceDirection.magnitude;
-            collider.GetComponent<Rigidbody2D>().AddForce(10f * inverse * forceDirection * pullForce * Time.fixedDeltaTime);
+            if (collider.gameObject.tag != "Whirlpool")
+            {
+                collider.GetComponent<Rigidbody2D>().AddForce(10f * inverse * forceDirection * pullForce * Time.fixedDeltaTime);
+            }
         }
     }
 
-    void OnTriggerEnter(Collider2D coll)
+    void OnTriggerEnter2D(Collider2D coll)
     {
-        //if(coll.)
+        if(coll.gameObject.tag == "FishPlayerBullet" || coll.gameObject.tag == "BearPlayerBullet" || coll.gameObject.tag == "FishAllyBullet" || coll.gameObject.tag == "BearAllyBullet")
+        {
+            Destroy(coll.gameObject);
+        }
 
     }
     
