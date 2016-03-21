@@ -1,17 +1,61 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+
 
 public class MainMenu : MonoBehaviour {
-
+    public AudioSource audio;
+    public Image flash;
+    public GameObject title1, title2;
+    public GameObject button;
+    public GameObject background;
 	// Use this for initialization
 	void Start () {
-	
+        audio.Pause();
 	}
-	
+    bool title2move = false;
+    IEnumerator animate()
+    {
+        background.SetActive(true);
+        button.SetActive(true);
+        audio.UnPause();
+        Color c = flash.color;
+        c.a = 1f;
+        flash.color = c;
+        for(int cd = 0; cd < 5; ++cd)
+        {
+            yield return new WaitForSeconds(0.05f);
+            c.a -= 0.25f;
+            flash.color = c;
+        }
+        c.a = 0f;
+        flash.color = c;
+        yield return new WaitForSeconds(2f);
+    }
+    public Vector3 title1dest, title2dest;
+    bool doinit = false;
 	// Update is called once per frame
-	void Update () {
-	
-	}
+	void FixedUpdate () {
+	    if((title1.transform.localPosition - title1dest).magnitude > 5)
+        {
+            title1.transform.localPosition = Vector3.Lerp(title1.transform.localPosition, title1dest,Time.deltaTime * 5f);
+        } else
+        {
+            title2move = true;
+        }
+        if (title2move && (title2.transform.localPosition - title2dest).magnitude > 5)
+        {
+            title2.transform.localPosition = Vector3.Lerp(title2.transform.localPosition, title2dest, Time.deltaTime * 5f);
+        }
+        else
+        {
+            if ( title2move && !doinit)
+            {
+                doinit = true;
+                StartCoroutine(animate());
+            }
+        }
+    }
 
     public void StartGame()
     {
