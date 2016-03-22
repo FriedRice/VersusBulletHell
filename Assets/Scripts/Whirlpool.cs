@@ -37,7 +37,7 @@ public class Whirlpool : MonoBehaviour {
 
     IEnumerator lifetime()
     {
-        yield return new WaitForSeconds(12f);
+        yield return new WaitForSeconds(6f);
         Destroy(this.gameObject);
     }
 
