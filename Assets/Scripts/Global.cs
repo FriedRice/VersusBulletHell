@@ -137,8 +137,8 @@ public class Global : MonoBehaviour {
         }
         if (gameTimer > 3)
         {
-            HUB.S.countdownLeft.text = "GO";
-            HUB.S.countdownRight.text = "GO";
+            HUB.S.countdownLeft.text = "GO!";
+            HUB.S.countdownRight.text = "GO!";
             spawner1.SetActive(true);
             spawner2.SetActive(true);
         }
