@@ -59,14 +59,14 @@ public class Laser : MonoBehaviour
     {
 
         HUB.S.PlaySound("Alarm", 1f);
-        for (int c = 0; c < 10; ++c)
+        for (int c = 0; c < 5; ++c)
         {
             sr.enabled = true;
             yield return new WaitForSeconds(0.1f);
             sr.enabled = false;
             yield return new WaitForSeconds(0.1f);
         }
-        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForSeconds(0.5f);
         ps.Play();
 
         HUB.S.PlaySound("Laser", 1f);

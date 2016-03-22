@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class DifficultyManager : MonoBehaviour {
 
-    public static int MAX_DIFFICULTY_LEVEL = 10;
+    public static int MAX_DIFFICULTY_LEVEL = 9;
 
     static GameObject[] enemys = new GameObject[] {
         Resources.Load("Enemy/Fish1") as GameObject,
