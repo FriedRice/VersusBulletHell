@@ -28,6 +28,7 @@ public class Player : MonoBehaviour {
     protected SpriteRenderer sprite_renderer;
     float blink_start_time;
     string enemy_layer_prefix;
+    Color base_sprite_color;
 
     public delegate void WeaponFireDelegate();
     public WeaponFireDelegate fireDelegate;
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour {
     protected int my_number;
     protected Sprite idle, twinkle, slash, slash_back;
     List<string> Enemy_tags; //enemy player followed by enemy minions followed by enemy bullets
+
     // Use this for initialization
     protected virtual void Start() {
         rigid = GetComponent<Rigidbody2D>();
@@ -48,6 +50,7 @@ public class Player : MonoBehaviour {
         invincible = false;
         blink_start_time = -9999999;
         hit_box_marker.SetActive(false);
+        base_sprite_color = sprite_renderer.color;
         for (int i = 1; i < weapon_upgrades.Length; ++i) {
             weapon_upgrades[i].SetActive(false);
         }
@@ -263,7 +266,7 @@ public class Player : MonoBehaviour {
     }
 
     IEnumerator blinkAvatar() {
-        Color sprite_color = sprite_renderer.color;
+        Color sprite_color = base_sprite_color;
         while ((Time.time - blink_start_time) < blink_time) {
             if (sprite_renderer.color.a == 0) {
                 sprite_color.a = 255;
@@ -275,9 +278,7 @@ public class Player : MonoBehaviour {
             yield return new WaitForSeconds(blink_interval);
         }
 
-        if (sprite_renderer.color.a == 0) {
-            sprite_renderer.color = sprite_color;
-        }
+        sprite_renderer.color = base_sprite_color;
         toggleInvincible(false);
     }
 
