@@ -313,7 +313,7 @@ public class Player : MonoBehaviour {
             }
             Invoke("disableKatana", katana_duration);
         } else {
-            HUB.S.PlaySound("Sharpen", Random.Range(0.5f, 1f));
+            
             beginKatanaSlash();
         }
     }
@@ -330,6 +330,7 @@ public class Player : MonoBehaviour {
         // GameObject katana = transform.Find("katana").gameObject;
         //    katana.transform.rot
         //  katana.GetComponent<BoxCollider2D>().enabled = true;
+        HUB.S.PlaySound("Sharpen", Random.Range(0.5f, 1f));
         other_side.GetComponent<CircleCollider2D>().enabled = true;
         List<GameObject> enemies = new List<GameObject>();
         enemies.Add(GameObject.FindGameObjectWithTag(Enemy_tags[0]));
