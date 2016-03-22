@@ -91,6 +91,8 @@ public class Global : MonoBehaviour {
 	void Start () {
         gameTimer = 0;
         StartCoroutine(pickRandomEvent());
+        Instantiate(Resources.Load("FullFish"));
+        Instantiate(Resources.Load("FullBear"));
 	}
 	
 	// Update is called once per frame
