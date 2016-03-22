@@ -38,8 +38,7 @@ public class Global : MonoBehaviour {
         {
             float interval = Random.Range(15f, 30f);
             yield return new WaitForSeconds(interval);
-
-            if (!enableEvents) yield break;
+            
             int rand = Random.Range(1, 3);
             switch (rand)
             {
@@ -109,7 +108,6 @@ public class Global : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         gameTimer = 0;
-        enableEvents = false;
         spawner1 = GameObject.Find("Spawner");
         spawner2 = GameObject.Find("Spawner (1)");
         spawner1.SetActive(false);
