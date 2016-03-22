@@ -206,10 +206,13 @@ public class Player : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D coll) {
-        if (coll.gameObject.tag == "UpgradeBlock") {
+        if (coll.gameObject.tag == "UpgradeBlock")
+        {
+            HUB.S.PlaySound("PowerupGet", 0.1f);
             ++upgrade_points;
             Destroy(coll.gameObject);
         } else if (coll.gameObject.tag == "PowerupBlock") {
+            HUB.S.PlaySound("PowerupGet", 0.1f);
             ++powerup_points;
             HUB.S.UpdateWeapon();
             Destroy(coll.gameObject);
