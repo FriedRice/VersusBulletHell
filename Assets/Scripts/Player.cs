@@ -217,11 +217,9 @@ public class Player : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D coll) {
         if (coll.gameObject.tag == "UpgradeBlock") {
-            SoundManager.instance.PlaySingle(upgradeSound);
             ++upgrade_points;
             Destroy(coll.gameObject);
         } else if (coll.gameObject.tag == "PowerupBlock") {
-            SoundManager.instance.PlaySingle(powerupSound);
             ++powerup_points;
             HUB.S.UpdateWeapon();
             Destroy(coll.gameObject);

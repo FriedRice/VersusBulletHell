@@ -62,7 +62,7 @@ public class PlayerWeapon : MonoBehaviour {
         if (Time.time - last_shot_time < delay_between_shots) {
             return;
         }
-        HUB.S.PlaySound("Fire", Random.Range(0.05f, 0.4f));
+        HUB.S.PlaySound("Fire", Random.Range(0.05f, 0.1f));
         GameObject new_bullet = Instantiate(bullet_prefab) as GameObject;
         new_bullet.layer = bullet_layer;
         new_bullet.tag = bullet_tag;
