@@ -35,7 +35,6 @@ public class Player1 : Player {
         my_inputs.fire2 = string.Format("Fire2{0}", my_number);
         my_inputs.fire3 = string.Format("Fire3{0}", my_number);
         idle = sprite_renderer.sprite;
-        slash = Resources.Load("FishFrontSlash")as Sprite;
     }
 
     protected override bool isEnemyAllyTag(string tag) {

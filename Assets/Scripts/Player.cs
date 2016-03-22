@@ -40,7 +40,7 @@ public class Player : MonoBehaviour {
     public AudioClip powerupSound;
     public AudioClip upgradeSound;
     protected int my_number;
-    protected Sprite idle, twinkle, slash, slash_back;
+    public Sprite idle, twinkle, slash, slash_back;
     List<string> Enemy_tags; //enemy player followed by enemy minions followed by enemy bullets
 
     // Use this for initialization
@@ -305,11 +305,15 @@ public class Player : MonoBehaviour {
             }
         }
 
+        sprite_renderer.sprite = slash;
+        Invoke("idleAnimation", 0.2f);
     }
 
     void idleAnimation() {
+        other_side.GetComponent<CircleCollider2D>().enabled = false;
         if (!immortal)
             invincible = false;
+        sprite_renderer.sprite = idle;
     }
 
     protected virtual bool isEnemyAllyTag(string tag) {
