@@ -32,13 +32,13 @@ public class Player : MonoBehaviour {
 
     public delegate void WeaponFireDelegate();
     public WeaponFireDelegate fireDelegate;
-    GameObject other_side;
+   protected GameObject other_side;
     public AudioClip fireSound1;
     public AudioClip fireSound2;
     public AudioClip powerupSound;
     public AudioClip upgradeSound;
     protected int my_number;
-    public Sprite idle, twinkle, slash, slash_back;
+    public Sprite idle, idle_back, twinkle, slash, slash_back;
     List<string> Enemy_tags; //enemy player followed by enemy minions followed by enemy bullets
 
     // Use this for initialization
@@ -321,13 +321,14 @@ public class Player : MonoBehaviour {
                     target.GetComponent<BulletSprite>().Dissipate();
             }
         }
-
-        sprite_renderer.sprite = slash;
+        other_side.GetComponent<SpriteRenderer>().sprite = slash;
+        sprite_renderer.sprite = slash_back;
         Invoke("idleAnimation", 0.2f);
     }
 
     void idleAnimation() {
         other_side.GetComponent<CircleCollider2D>().enabled = false;
+        other_side.GetComponent<SpriteRenderer>().sprite = idle_back;
         if (!immortal)
             invincible = false;
         sprite_renderer.sprite = idle;
