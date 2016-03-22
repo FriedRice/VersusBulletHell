@@ -357,7 +357,7 @@ public class Player : MonoBehaviour {
         other_side.GetComponent<SpriteRenderer>().sprite = slash;
         sprite_renderer.sprite = slash_back;
         Invoke("idleAnimation", 0.2f);
-        Invoke("katanaRefresh", 3f);
+        Invoke("katanaRefresh", 1.5f);
     }
     void katanaRefresh() {
         slashing = false;
