@@ -23,9 +23,11 @@ public class Player : MonoBehaviour {
     public float move_speed = 10f;
     public float move_slow_speed = 4f;
     public GameObject hit_box_marker;
+    public GameObject other_side_sprite;
     protected Bounds level_bounds;
     Rigidbody2D rigid;
     protected SpriteRenderer sprite_renderer;
+    SpriteRenderer other_side_sprite_renderer;
     float blink_start_time;
     string enemy_layer_prefix;
     Color base_sprite_color;
@@ -45,6 +47,7 @@ public class Player : MonoBehaviour {
     protected virtual void Start() {
         rigid = GetComponent<Rigidbody2D>();
         sprite_renderer = GetComponent<SpriteRenderer>();
+        other_side_sprite_renderer = other_side_sprite.GetComponent<SpriteRenderer>();
         other_side = transform.Find("other_side").gameObject;
         upgrade_level = 0;
         invincible = false;
@@ -84,8 +87,7 @@ public class Player : MonoBehaviour {
     public GameObject LASER;
     void updateMovement() {
         Vector2 move_vector = getInputMovementVector();
-        if (controlsAreReversed)
-        {
+        if (controlsAreReversed) {
             move_vector = -move_vector;
         }
         if (!level_bounds.Contains(this.transform.position)) {
@@ -106,32 +108,24 @@ public class Player : MonoBehaviour {
         }
 
 
-        if(powerup_points >= POWERUPTHRESHOLD && !hasPowerup)
-        {
+        if (powerup_points >= POWERUPTHRESHOLD && !hasPowerup) {
             hasPowerup = true;
             int rng = Random.Range(-1, 1);
-            if(rng == 0)
-            {
+            if (rng == 0) {
                 PowerupName = "Laser";
             } else { PowerupName = "Reverse Controls"; }
-        } else
-        {
-            if (powerup_points < POWERUPTHRESHOLD)
-            {
+        } else {
+            if (powerup_points < POWERUPTHRESHOLD) {
                 hasPowerup = false;
                 PowerupName = "None";
             }
         }
 
-        if (getInputPower())
-        {
-            if (hasPowerup)
-            {
-                if(PowerupName == "Laser")
-                {
+        if (getInputPower()) {
+            if (hasPowerup) {
+                if (PowerupName == "Laser") {
                     FireLaser();
-                } else if (PowerupName == "Reverse Controls")
-                {
+                } else if (PowerupName == "Reverse Controls") {
 
                     ReverseControlsOther();
                 }
@@ -140,20 +134,17 @@ public class Player : MonoBehaviour {
         HUB.S.UpdatePowerup();
     }
 
-    void ReverseControlsOther()
-    {
+    void ReverseControlsOther() {
         HUB.S.PlaySound("Discord", 1f);
         PowerupName = "None";
         powerup_points = 0;
         hasPowerup = false;
-        if(this == players[0])
-        {
+        if (this == players[0]) {
             HUB.S.FishUsedPowerupEffect();
             // u r fish
             GameObject g = Instantiate(Resources.Load("Reverser"), transform.position, transform.rotation) as GameObject;
             g.GetComponent<ReverseControls>().Fish = false;
-        } else
-        {
+        } else {
             HUB.S.BearUsedPowerupEffect();
             // u r bear
             GameObject g = Instantiate(Resources.Load("Reverser"), transform.position, transform.rotation) as GameObject;
@@ -161,21 +152,17 @@ public class Player : MonoBehaviour {
         }
     }
 
-    void FireLaser()
-    {
+    void FireLaser() {
         PowerupName = "None";
         powerup_points = 0;
         hasPowerup = false;
         GameObject g = Instantiate(LASER, new Vector3(transform.position.x, 0, 0), transform.rotation) as GameObject;
-        if (this == players[0])
-        {
+        if (this == players[0]) {
             // u r fish
             g.GetComponent<Laser>().ISBEAR = false;
             HUB.S.FishUsedPowerupEffect();
             g.transform.GetChild(0).GetComponent<ParticleSystem>().startColor = Color.red;
-        }
-        else
-        {
+        } else {
             // u r ber
             g.GetComponent<Laser>().ISBEAR = true;
             HUB.S.BearUsedPowerupEffect();
@@ -239,26 +226,22 @@ public class Player : MonoBehaviour {
         upgrade_points = 0;
         upgrade_level = 0;
         HUB.S.PlaySound("BearDies", 1f);
-        if(this == players[0])
-        {
+        if (this == players[0]) {
             // fish
             GameObject g = Instantiate(Resources.Load("LoseLife")) as GameObject;
             g.GetComponent<PlayerFollowLife>().FollowsFish = true;
-        } else
-        {
+        } else {
             GameObject g = Instantiate(Resources.Load("LoseLife")) as GameObject;
             g.GetComponent<PlayerFollowLife>().FollowsFish = false;
 
         }
+
         if (lives == 0) {
             Destroy(SoundManager.instance.gameObject);
-            if(this == players[0])
-            {
+            if (this == players[0]) {
                 // bear win
-                
                 Application.LoadLevel(3);
-            } else
-            {
+            } else {
                 Application.LoadLevel(2);
             }
         } else {
@@ -277,15 +260,16 @@ public class Player : MonoBehaviour {
         while ((Time.time - blink_start_time) < blink_time) {
             if (sprite_renderer.color.a == 0) {
                 sprite_color.a = 255;
-                sprite_renderer.color = sprite_color;
             } else {
                 sprite_color.a = 0;
-                sprite_renderer.color = sprite_color;
             }
+            sprite_renderer.color = sprite_color;
+            other_side_sprite_renderer.color = sprite_color;
             yield return new WaitForSeconds(blink_interval);
         }
 
         sprite_renderer.color = base_sprite_color;
+        other_side_sprite_renderer.color = base_sprite_color;
         toggleInvincible(false);
     }
 
@@ -300,15 +284,14 @@ public class Player : MonoBehaviour {
     }
 
     void performSlash() {
-       // GameObject katana = transform.Find("katana").gameObject;
-    //    katana.transform.rot
-      //  katana.GetComponent<BoxCollider2D>().enabled = true;
+        // GameObject katana = transform.Find("katana").gameObject;
+        //    katana.transform.rot
+        //  katana.GetComponent<BoxCollider2D>().enabled = true;
         other_side.GetComponent<CircleCollider2D>().enabled = true;
         List<GameObject> enemies = new List<GameObject>();
-        foreach(string tag in Enemy_tags)
-        {
+        foreach (string tag in Enemy_tags) {
             GameObject[] enemy_objects = GameObject.FindGameObjectsWithTag(tag);
-            foreach(GameObject enemy_object in enemy_objects) enemies.Add(enemy_object);
+            foreach (GameObject enemy_object in enemy_objects) enemies.Add(enemy_object);
         }
         for (int i = enemies.Count - 1; i > 0; i--) {
             if (other_side.GetComponent<CircleCollider2D>().bounds.Contains(enemies[i].transform.position)) {
