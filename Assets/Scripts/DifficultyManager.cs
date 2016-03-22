@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class DifficultyManager : MonoBehaviour {
 
-    public static int MAX_DIFFICULTY_LEVEL = 6;
+    public static int MAX_DIFFICULTY_LEVEL = 10;
 
     static GameObject[] enemys = new GameObject[] {
         Resources.Load("Enemy/Fish1") as GameObject,
@@ -19,11 +19,20 @@ public class DifficultyManager : MonoBehaviour {
         { 0.6f, 0.2f, 0.2f},
         { 0.4f, 0.3f, 0.3f},
         { 0.25f, 0.4f, 0.35f},
+        { 0.2f, 0.4f, 0.4f},
+        { 0.2f, 0.4f, 0.4f},
+        { 0.2f, 0.4f, 0.4f},
         { 0.2f, 0.4f, 0.4f}
     };
 
     static float[] difficulty_modifiers = new float[] {
-        0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f, 1.1f
+        0.5f, 0.6f, 0.7f, 0.8f, 0.9f,
+        1.0f, 1.1f, 1.2f, 1.3f, 1.4f
+    };
+
+    static float[] health_modifiers = new float[] {
+        1.0f, 1.0f, 1.0f, 1.0f, 1.1f,
+        1.2f, 1.4f, 1.6f, 1.8f, 2.0f
     };
 
 	// Use this for initialization
@@ -45,6 +54,7 @@ public class DifficultyManager : MonoBehaviour {
         enemy_comp.Speed = enemy_comp.base_speed * difficulty_mod;
         enemy_comp.bulletSpeed = enemy_comp.base_bullet_speed * difficulty_mod;
         enemy_comp.animspeed = enemy_comp.base_animespeed * (1f / difficulty_mod);
+        enemy_comp.HEALTH = Mathf.CeilToInt(enemy_comp.base_health * health_modifiers[difficulty_level]);
         return enemy;
     }
 

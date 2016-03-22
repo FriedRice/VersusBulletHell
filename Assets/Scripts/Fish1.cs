@@ -9,7 +9,6 @@ public class Fish1 : Enemy {
 
     public float movementBoundXLeft, movementBoundXright, movementBoundYTop, movementBoundYBot;
 
-    public int HEALTH = 15;
     public Sprite bear_sprite;
     public Vector3 nextdest;
 

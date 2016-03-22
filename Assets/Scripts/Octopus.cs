@@ -11,7 +11,6 @@ public class Octopus : Enemy {
     public float movementBoundXLeft, movementBoundXright, movementBoundYTop, movementBoundYBot;
 
     public Sprite bear_sprite;
-    public int HEALTH = 15;
 
     Rigidbody2D rb;
 

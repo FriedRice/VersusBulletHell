@@ -11,7 +11,6 @@ public class Squid : Enemy {
     public float movementBoundXLeft, movementBoundXright, movementBoundYTop, movementBoundYBot;
 
     public Sprite bear_sprite;
-    public int HEALTH = 55;
 
     Rigidbody2D rb;
 

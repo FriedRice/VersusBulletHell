@@ -19,7 +19,8 @@ public class Enemy : MonoBehaviour {
     public float bulletSpeed = 4f;
     public float base_animespeed = 0.5f;
     public float animspeed = 0.1f;
-    public float health;
+    public int HEALTH = 55;
+    public int base_health;
     public float time;
     public Vector3 spawn_position;
     public float side = 0; //-1=left,0=both,1 = right

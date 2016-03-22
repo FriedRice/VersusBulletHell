@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Spawner : MonoBehaviour {
     public List<GameObject> fish_list;
     public List<GameObject> units;
-    
+
     // Use this for initialization
     public bool tutorial = true;
     public int tutFishCount = 0;
@@ -19,7 +19,7 @@ public class Spawner : MonoBehaviour {
     const float BOUND_X = 5;
     const float BOUND_Y = 10;
 
-    
+
     public float difficultyIncRate;
     public float startSpawnRate;
     public float spawnRateDec;
@@ -125,11 +125,10 @@ public class Spawner : MonoBehaviour {
         Vector3 temp = new Vector3(x, y, 0);
         units.Add(enemy);
         enemy.GetComponent<Enemy>().Initialize(temp);
-        lastSpawnTime = Time.time;      
+        lastSpawnTime = Time.time;
     }
 
-    void TutorialMakeFish(int i)
-    {
+    void TutorialMakeFish(int i) {
         GameObject enemy = Instantiate(fish_list[i]) as GameObject;
         enemy.GetComponent<Enemy>().Speed = 10f;
         float x = Random.Range(transform.position.x - transform.localScale.x / 2, transform.position.x + transform.localScale.x / 2);
@@ -142,38 +141,31 @@ public class Spawner : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         UpdateAllyList();
-        if (tutorial)
-        {
-            if (units.Count == 0)
-            {
-                if (tutFishCount < 3)
-                {
+        if (tutorial) {
+            if (units.Count == 0) {
+                if (tutFishCount < 3) {
                     TutorialMakeFish(tutFishCount);
                     tutFishCount++;
                 }
             }
-            if (tutFishCount == 3 && units.Count == 0)
-            {
+            if (tutFishCount == 3 && units.Count == 0) {
                 tutorial = false;
                 lastDiffInc = 0;
                 foreach (Player p in Player.players) {
                     p.reset();
                 }
             }
-        }
-        else
-        {
+        } else {
 
             if (Time.time - lastDiffInc > difficultyIncRate) IncreaseDifficulty();
             if (Time.time - lastSpawnTime < currentSpawnRate) return;
             if (units.Count >= currentAlliesAllowed) return;
             MakeFish();
-        }          
-            
+        }
+
     }
 
-    void IncreaseDifficulty()
-    {
+    void IncreaseDifficulty() {
         lastDiffInc = Time.time;
         if (difficultyLevel >= DifficultyManager.MAX_DIFFICULTY_LEVEL) return;
         difficultyLevel++;
@@ -181,12 +173,9 @@ public class Spawner : MonoBehaviour {
         if (currentAlliesAllowed < maxAlliesAllowed) currentAlliesAllowed++;
     }
 
-    void UpdateAllyList()
-    {
-        for (int i = units.Count - 1; i > -1; i--)
-        {
-            if (units[i] == null)
-            {
+    void UpdateAllyList() {
+        for (int i = units.Count - 1; i > -1; i--) {
+            if (units[i] == null) {
                 units.RemoveAt(i);
             }
         }
