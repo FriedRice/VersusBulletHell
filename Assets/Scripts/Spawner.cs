@@ -22,9 +22,9 @@ public class Spawner : MonoBehaviour {
 
     public float difficultyIncRate;
     public float startSpawnRate;
-    public float spawnRateDec;
     public int maxAlliesAllowed;
     public bool ___________________;
+    public float spawnRateDec;
     public int difficultyLevel;
     public float lastDiffInc;
     public float currentSpawnRate;
@@ -36,7 +36,9 @@ public class Spawner : MonoBehaviour {
         currentSpawnRate = startSpawnRate;
         currentAlliesAllowed = 1;
         lastSpawnTime = -999;
+        spawnRateDec = startSpawnRate / ((float) DifficultyManager.MAX_DIFFICULTY_LEVEL + 1);
     }
+
     void Awake() {
         left_cam = GameObject.Find("CamLeft");
         right_cam = GameObject.Find("CamRight");

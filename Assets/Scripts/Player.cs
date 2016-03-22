@@ -237,12 +237,6 @@ public class Player : MonoBehaviour {
         Global.S.destroyLevelEnemies(this.transform.position, enemy_layer_prefix);
         --lives;
         HUB.S.UpdateLives();
-        for (int i = 1; i <= upgrade_level; ++i) {
-            weapon_upgrades[i].SendMessage("disable");
-            weapon_upgrades[i].SetActive(false);
-        }
-        upgrade_points = 0;
-        upgrade_level = 0;
         HUB.S.PlaySound("BearDies", 1f);
         if (this == players[0]) {
             // fish

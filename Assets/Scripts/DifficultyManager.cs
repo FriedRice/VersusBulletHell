@@ -31,8 +31,8 @@ public class DifficultyManager : MonoBehaviour {
     };
 
     static float[] health_modifiers = new float[] {
-        1.0f, 1.0f, 1.0f, 1.0f, 1.1f,
-        1.2f, 1.4f, 1.6f, 1.8f, 2.0f
+        1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
     };
 
 	// Use this for initialization
