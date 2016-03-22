@@ -44,8 +44,8 @@ public class Player1 : Player {
 
     protected override void toggleInvincible(bool enable) {
         base.invincible = enable;
-        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer(ENEMY_ALLY_TAG), enabled);
-        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer(ENEMY_ALLY_BULLET_TAG), enabled);
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer(ENEMY_ALLY_TAG), enable);
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer(ENEMY_ALLY_BULLET_TAG), enable);
     }
 
     protected override Vector2 getInputMovementVector() {
