@@ -304,6 +304,7 @@ public class Player : MonoBehaviour {
             if (this == players[0]) {
                 HUB.S.FishUsedPowerupEffect();
                 GameObject g = Instantiate(Resources.Load("Swords")) as GameObject;
+                g.GetComponent<Swords>().Fish = false;
                 // u r fish
             } else {
                 HUB.S.BearUsedPowerupEffect();
