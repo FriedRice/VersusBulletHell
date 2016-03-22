@@ -110,10 +110,13 @@ public class Player : MonoBehaviour {
 
         if (powerup_points >= POWERUPTHRESHOLD && !hasPowerup) {
             hasPowerup = true;
-            int rng = Random.Range(-1, 1);
+            int rng = Random.Range(-1, 2);
             if (rng == 0) {
                 PowerupName = "Laser";
-            } else { PowerupName = "Reverse Controls"; }
+            } else if (rng == 1) { PowerupName = "Reverse Controls"; } 
+            else {
+
+            }
         } else {
             if (powerup_points < POWERUPTHRESHOLD) {
                 hasPowerup = false;

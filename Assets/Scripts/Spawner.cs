@@ -187,7 +187,10 @@ public class Spawner : MonoBehaviour {
                     tutFishCount++;
                 }
             }
-            if (tutFishCount == 3 && units.Count == 0) tutorial = false;
+            if (tutFishCount == 3 && units.Count == 0)
+            {
+                tutorial = false;
+            }
         }
         //else
         //{
