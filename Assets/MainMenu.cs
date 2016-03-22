@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
     public AudioSource audio;
@@ -69,12 +69,12 @@ public class MainMenu : MonoBehaviour {
     {
         Application.LoadLevel(scene);
     }
-    public int destination = 1;
+    public string destination = "Juice";
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            Application.LoadLevel(destination);
+            SceneManager.LoadScene(destination);
         }
     }
 }
