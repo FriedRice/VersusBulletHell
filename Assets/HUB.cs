@@ -6,7 +6,7 @@ public class HUB : MonoBehaviour {
 
     public static HUB S;
 
-    public Text livesLeft, livesRight, weaponLeft, weaponRight, powerupLeft, powerupRight;
+    public Text livesLeft, livesRight, weaponLeft, weaponRight, powerupLeft, powerupRight, countdownLeft, countdownRight;
     public GameObject BearShink, FishShink;
     public Image flash;
 
