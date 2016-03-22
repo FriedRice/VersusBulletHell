@@ -251,7 +251,16 @@ public class Player : MonoBehaviour {
 
         }
         if (lives == 0) {
-            Destroy(this.gameObject);
+            Destroy(SoundManager.instance.gameObject);
+            if(this == players[0])
+            {
+                // bear win
+                
+                Application.LoadLevel(3);
+            } else
+            {
+                Application.LoadLevel(2);
+            }
         } else {
             if ((Time.time - blink_start_time) < blink_time) {
                 blink_start_time = Time.time;

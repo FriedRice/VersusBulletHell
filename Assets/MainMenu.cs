@@ -65,8 +65,16 @@ public class MainMenu : MonoBehaviour {
         }
     }
 
-    public void StartGame()
+    public void StartGame(int scene)
     {
-        Application.LoadLevel(Application.loadedLevel + 1);
+        Application.LoadLevel(scene);
+    }
+    public int destination = 1;
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            Application.LoadLevel(destination);
+        }
     }
 }
