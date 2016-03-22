@@ -300,10 +300,13 @@ public class Player : MonoBehaviour {
             ripper_mode = true;
             if (this == players[0]) {
                 HUB.S.FishUsedPowerupEffect();
+                GameObject g = Instantiate(Resources.Load("Swords")) as GameObject;
                 // u r fish
             } else {
                 HUB.S.BearUsedPowerupEffect();
                 // u r bear
+                GameObject g = Instantiate(Resources.Load("Swords")) as GameObject;
+                g.GetComponent<Swords>().Fish = true;
             }
             Invoke("disableKatana", katana_duration);
         } else {
