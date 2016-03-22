@@ -237,7 +237,7 @@ public class Player : MonoBehaviour {
         }
         upgrade_points = 0;
         upgrade_level = 0;
-
+        HUB.S.PlaySound("BearDies", 1f);
         if (lives == 0) {
             Destroy(this.gameObject);
         } else {
