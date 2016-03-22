@@ -13,6 +13,8 @@ public class Global : MonoBehaviour {
     public GameObject tidalWaveWarning;
     public GameObject whirlpoolWarning;
 
+    public float gameTimer;
+
     public void destroyLevelEnemies(Vector2 position, string enemy_layer_prefix) {
         GameObject[] enemy_bullets = GameObject.FindGameObjectsWithTag(enemy_layer_prefix + ALLY_BULLET_LAYER_SUFFIX);
         foreach (GameObject enemy_bullet in enemy_bullets) {
@@ -87,11 +89,12 @@ public class Global : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        gameTimer = 0;
         StartCoroutine(pickRandomEvent());
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+        gameTimer += Time.deltaTime;
 	}
 }

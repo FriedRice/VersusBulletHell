@@ -11,6 +11,8 @@ public class Spawner : MonoBehaviour {
     // Use this for initialization
     public float delay = 10;
     public float timer = 0;
+    public bool tutorial = true;
+    public int tutFishCount = 0;
     public bool mode_3d_left = false;
     public bool mode_3d_right = false;
     bool left_in_3d = false;
@@ -23,7 +25,6 @@ public class Spawner : MonoBehaviour {
 
     void Start() {
         timer = delay - 3;
-
     }
     void Awake() {
         left_cam = GameObject.Find("CamLeft");
@@ -143,19 +144,68 @@ public class Spawner : MonoBehaviour {
         }
     }
 
+    void TutorialMakeFish(int i)
+    {
+        // print("making fish");
+        GameObject enemy = Instantiate(fish_list[i]) as GameObject;
+
+        switch (i)
+        {
+            case 0:
+                enemy.GetComponent<Fish1>().Speed = 10f;
+                break;
+            case 1:
+                enemy.GetComponent<Squid>().Speed = 10f;
+                break;
+            case 2:
+                enemy.GetComponent<Octopus>().Speed = 10f;
+                break;
+        }
+            
+        float x = Random.Range(transform.position.x - transform.localScale.x / 2, transform.position.x + transform.localScale.x / 2);
+        float y = Random.Range(transform.position.y - transform.localScale.y / 2, transform.position.y + transform.localScale.y / 2);
+        Vector3 temp = new Vector3(x, y, 0);
+        units.Add(enemy);
+        enemy.GetComponent<Enemy>().Initialize(temp);
+        
+        //if (delay > 1)
+        //{
+        //    delay -= 0.3f;
+        //}
+
+    }
+
     // Update is called once per frame
     void Update() {
-        timer += Time.deltaTime;
-        if (timer > delay) {
-            timer = 0;
-            MakeFish();
-        }
-        for (int i = units.Count - 1; i > -1; i--) {
-            if (units[i] == null || Mathf.Abs(units[i].transform.position.y) > BOUND_Y) {
-                if (units[i] != null)
-                    Destroy(units[i]);
-                units.RemoveAt(i);
+        if (tutorial)
+        {
+            if (units.Count == 0)
+            {
+                if (tutFishCount < 3)
+                {
+                    TutorialMakeFish(tutFishCount);
+                    tutFishCount++;
+                }
             }
+            if (tutFishCount == 3 && units.Count == 0) tutorial = false;
         }
+        //else
+        //{
+            timer += Time.deltaTime;
+            if (timer > delay)
+            {
+                timer = 0;
+                if(!tutorial) MakeFish();
+            }
+            for (int i = units.Count - 1; i > -1; i--)
+            {
+                if (units[i] == null || Mathf.Abs(units[i].transform.position.y) > BOUND_Y)
+                {
+                    if (units[i] != null)
+                        Destroy(units[i]);
+                    units.RemoveAt(i);
+                }
+            }
+        //}
     }
 }
