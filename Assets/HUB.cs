@@ -29,8 +29,8 @@ public class HUB : MonoBehaviour {
 
     public void UpdatePowerup()
     {
-        powerupLeft.text = "Powerup Progress: " + (Player.players[0].powerup_points /(float) Player.players[0].POWERUPTHRESHOLD * 100f).ToString("F2") + "%\nAttack: " + Player.players[0].PowerupName;
-        powerupRight.text = "Powerup Progress: " + (Player.players[1].powerup_points / (float)Player.players[1].POWERUPTHRESHOLD * 100f).ToString("F2") + "%\nAttack: " + Player.players[1].PowerupName;
+        powerupLeft.text = (Player.players[0].powerup_points /(float) Player.players[0].POWERUPTHRESHOLD * 100f).ToString("F2") + "%\nAttack: " + Player.players[0].PowerupName;
+        powerupRight.text = (Player.players[1].powerup_points / (float)Player.players[1].POWERUPTHRESHOLD * 100f).ToString("F2") + "%\nAttack: " + Player.players[1].PowerupName;
 
     }
 

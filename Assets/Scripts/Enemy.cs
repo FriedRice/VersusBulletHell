@@ -49,7 +49,9 @@ public class Enemy : MonoBehaviour {
         bullet.tag = bullet_tag;
         bullet.GetComponent<SpriteRenderer>().color = bullet_color;
     }
+    public virtual void Die() {
 
+    }
     protected bool isEnemyBulletTag(string tag) {
         return tag == enemy_bullet_tag;
     }
