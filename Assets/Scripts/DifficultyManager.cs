@@ -4,10 +4,12 @@ using System.Collections.Generic;
 
 public class DifficultyManager : MonoBehaviour {
 
+    public static int MAX_DIFFICULTY_LEVEL = 7;
+
     static GameObject[] enemys = new GameObject[] {
-        Resources.Load("Enemies/Fish1") as GameObject,
-        Resources.Load("Enemies/Squid") as GameObject,
-        Resources.Load("Enemies/Octopus") as GameObject
+        Resources.Load("Enemy/Fish1") as GameObject,
+        Resources.Load("Enemy/Squid") as GameObject,
+        Resources.Load("Enemy/Octopus") as GameObject
     };
 
     static float[,] spawn_probabilities = new float[,] {

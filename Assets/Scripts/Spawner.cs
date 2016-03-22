@@ -5,10 +5,8 @@ using System.Collections.Generic;
 public class Spawner : MonoBehaviour {
     public List<GameObject> fish_list;
     public List<GameObject> units;
-    public int max_fish = 6;
+    
     // Use this for initialization
-    public float delay;
-    public float timer;
     public bool tutorial = true;
     public int tutFishCount = 0;
     public bool mode_3d_left = false;
@@ -21,8 +19,23 @@ public class Spawner : MonoBehaviour {
     const float BOUND_X = 5;
     const float BOUND_Y = 10;
 
+    
+    public float difficultyIncRate;
+    public float startSpawnRate;
+    public float spawnRateDec;
+    public int maxAlliesAllowed;
+    public bool ___________________;
+    public int difficultyLevel;
+    public float lastDiffInc;
+    public float currentSpawnRate;
+    public int currentAlliesAllowed;
+    public float lastSpawnTime;
+
     void Start() {
-        timer = 0;
+        difficultyLevel = 0;
+        currentSpawnRate = startSpawnRate;
+        currentAlliesAllowed = 1;
+        lastSpawnTime = -999;
     }
     void Awake() {
         left_cam = GameObject.Find("CamLeft");
@@ -106,64 +119,29 @@ public class Spawner : MonoBehaviour {
      */
 
     void MakeFish() {
-       // print("making fish");
-        GameObject enemy = Instantiate(fish_list[Random.Range(0, fish_list.Count)]) as GameObject;
-        float x = Random.Range(transform.position.x - transform.localScale.x / 2, transform.position.x + transform.localScale.x / 2);
-        float y = Random.Range(transform.position.y - transform.localScale.y / 2, transform.position.y + transform.localScale.y / 2);
-        Vector3 temp = new Vector3(x, y, 0);
-
-        if (units.Count < max_fish) {
-            units.Add(enemy);
-            enemy.GetComponent<Enemy>().Initialize(temp);
-            /*
-            if (left_in_3d) {
-                Vector3 temp2 = temp + Vector3.forward * height_3d;
-                left_fish.transform.Rotate(Vector3.right, -rot_3d);
-                left_fish.GetComponent<Enemy>().Initialize(temp2);
-            } else {
-                left_fish.GetComponent<Enemy>().Initialize(temp);
-            }
-             */
-        }
-        else {
-            Destroy(enemy);
-        }
-
-        //if (delay > 1) {
-        //    delay -= 0.3f;
-        //}
-
-        
-    }
-
-    void TutorialMakeFish(int i)
-    {
-        // print("making fish");
-        GameObject enemy = Instantiate(fish_list[i]) as GameObject;
-
-        switch (i)
-        {
-            case 0:
-                enemy.GetComponent<Fish1>().Speed = 10f;
-                break;
-            case 1:
-                enemy.GetComponent<Squid>().Speed = 10f;
-                break;
-            case 2:
-                enemy.GetComponent<Octopus>().Speed = 10f;
-                break;
-        }
-            
+        GameObject enemy = DifficultyManager.getEnemy(difficultyLevel);
         float x = Random.Range(transform.position.x - transform.localScale.x / 2, transform.position.x + transform.localScale.x / 2);
         float y = Random.Range(transform.position.y - transform.localScale.y / 2, transform.position.y + transform.localScale.y / 2);
         Vector3 temp = new Vector3(x, y, 0);
         units.Add(enemy);
         enemy.GetComponent<Enemy>().Initialize(temp);
-        
+        lastSpawnTime = Time.time;      
+    }
+
+    void TutorialMakeFish(int i)
+    {
+        GameObject enemy = Instantiate(fish_list[i]) as GameObject;
+        enemy.GetComponent<Enemy>().Speed = 10f;
+        float x = Random.Range(transform.position.x - transform.localScale.x / 2, transform.position.x + transform.localScale.x / 2);
+        float y = Random.Range(transform.position.y - transform.localScale.y / 2, transform.position.y + transform.localScale.y / 2);
+        Vector3 temp = new Vector3(x, y, 0);
+        units.Add(enemy);
+        enemy.GetComponent<Enemy>().Initialize(temp);
     }
 
     // Update is called once per frame
     void Update() {
+        UpdateAllyList();
         if (tutorial)
         {
             if (units.Count == 0)
@@ -177,25 +155,37 @@ public class Spawner : MonoBehaviour {
             if (tutFishCount == 3 && units.Count == 0)
             {
                 tutorial = false;
+                lastDiffInc = 0;
             }
         }
-        //else
-        //{
-            timer += Time.deltaTime;
-            if (timer > delay)
+        else
+        {
+
+            if (Time.time - lastDiffInc > difficultyIncRate) IncreaseDifficulty();
+            if (Time.time - lastSpawnTime < currentSpawnRate) return;
+            if (units.Count >= currentAlliesAllowed) return;
+            MakeFish();
+        }          
+            
+    }
+
+    void IncreaseDifficulty()
+    {
+        lastDiffInc = Time.time;
+        if (difficultyLevel >= DifficultyManager.MAX_DIFFICULTY_LEVEL) return;
+        difficultyLevel++;
+        currentSpawnRate -= spawnRateDec;
+        if (currentAlliesAllowed < maxAlliesAllowed) currentAlliesAllowed++;
+    }
+
+    void UpdateAllyList()
+    {
+        for (int i = units.Count - 1; i > -1; i--)
+        {
+            if (units[i] == null)
             {
-                timer = 0;
-                if(!tutorial) MakeFish();
+                units.RemoveAt(i);
             }
-            for (int i = units.Count - 1; i > -1; i--)
-            {
-                if (units[i] == null || Mathf.Abs(units[i].transform.position.y) > BOUND_Y)
-                {
-                    if (units[i] != null)
-                        Destroy(units[i]);
-                    units.RemoveAt(i);
-                }
-            }
-        //}
+        }
     }
 }
