@@ -131,7 +131,6 @@ public class Player : MonoBehaviour {
                 if (PowerupName == "Laser") {
                     FireLaser();
                 } else if (PowerupName == "Reverse Controls") {
-
                     ReverseControlsOther();
                 } else if (PowerupName == "Katana") {
                     enableKatana();
@@ -297,7 +296,7 @@ public class Player : MonoBehaviour {
     }
 
     void enableKatana() {
-        if (ripper_mode == false) {
+        if (!ripper_mode) {
             ripper_mode = true;
             sprite_renderer.color = soul_color;
             other_side_sprite_renderer.color = soul_color;
@@ -313,6 +312,7 @@ public class Player : MonoBehaviour {
             }
             Invoke("disableKatana", katana_duration);
         } else {
+            HUB.S.PlaySound("Sharpen", Random.Range(0.5f, 1f));
             beginKatanaSlash();
         }
     }
