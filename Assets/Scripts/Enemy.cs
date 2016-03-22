@@ -18,14 +18,17 @@ public class Enemy : MonoBehaviour {
     public Vector3 spawn_position;
     public float side = 0; //-1=left,0=both,1 = right
     protected Color bullet_color;
+
     int bullet_layer;
     string bullet_tag;
     string enemy_bullet_tag;
+    SpriteRenderer sr;
 
     public void Initialize(Vector3 new_spawn_pos) {
         string layer_prefix;
         spawn_position = new_spawn_pos;
         transform.position = spawn_position;
+        sr = GetComponent<SpriteRenderer>();
 
         if (new_spawn_pos.y < 0) {
             transform.Rotate(Vector3.forward, 180);
@@ -44,10 +47,18 @@ public class Enemy : MonoBehaviour {
         bullet_layer = LayerMask.NameToLayer(bullet_tag);
     }
 
+    protected void setSprite(Sprite sprite) {
+        sr.sprite = sprite;
+        transform.Find("AllySprite").gameObject.GetComponent<AllySprite>().setSprite(sr);
+    }
+
     protected void setBulletLayerAndTag(GameObject bullet) {
         bullet.layer = bullet_layer;
         bullet.tag = bullet_tag;
-        bullet.GetComponent<SpriteRenderer>().color = bullet_color;
+
+        SpriteRenderer sr = bullet.GetComponent<SpriteRenderer>();
+        sr.color = bullet_color;
+        bullet.transform.Find("AllySprite").gameObject.GetComponent<AllySprite>().setSprite(sr);
     }
 
     protected bool isEnemyBulletTag(string tag) {

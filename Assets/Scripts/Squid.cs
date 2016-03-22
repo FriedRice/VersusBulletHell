@@ -50,8 +50,11 @@ public class Squid : Enemy {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         StartCoroutine(animate());
+
         if (transform.position.y > 0) {
-            sr.sprite = bear_sprite;
+            base.setSprite(bear_sprite);
+        } else {
+            base.setSprite(sr.sprite);
         }
         //CalculateNextPosition();
     }

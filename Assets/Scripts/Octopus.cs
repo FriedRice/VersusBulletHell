@@ -51,8 +51,12 @@ public class Octopus : Enemy {
         sr = GetComponent<SpriteRenderer>();
         StartCoroutine(animate());
  //       rb.AddForce(Vector3.down * Time.deltaTime * Speed, ForceMode2D.Impulse);
-        if (transform.position.y > 0)
-            sr.sprite = bear_sprite;
+
+        if (transform.position.y > 0) {
+            base.setSprite(bear_sprite);
+        } else {
+            base.setSprite(sr.sprite);
+        }
         //CalculateNextPosition();
     }
 

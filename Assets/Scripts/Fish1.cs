@@ -28,8 +28,12 @@ public class Fish1 : Enemy {
         StartCoroutine(animate());
         CalculateNextPosition();
         rb = GetComponent<Rigidbody2D>();
-        if (transform.position.y > 0)
-            sr.sprite = bear_sprite;
+
+        if (transform.position.y > 0) {
+            base.setSprite(bear_sprite);
+        } else {
+            base.setSprite(sr.sprite);
+        }
     }
 
     void Die() {

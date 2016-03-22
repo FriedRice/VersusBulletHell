@@ -42,6 +42,7 @@ public class BulletSprite : MonoBehaviour {
 
     public void Dissipate() {
         alive = false;
+        transform.Find("AllySprite").GetComponent<AllySprite>().makeInvisible();
         StartCoroutine(dieanim());
     }
 
