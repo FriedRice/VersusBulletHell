@@ -47,7 +47,7 @@ public class HUB : MonoBehaviour {
 
     IEnumerator animateFish()
     {
-
+        PlaySound("Sharpen", 1);
         FishShink.SetActive(true);
         Color c = flash.color;
         c.a = 1;
@@ -64,6 +64,7 @@ public class HUB : MonoBehaviour {
 
     IEnumerator animateBear()
     {
+        PlaySound("Sharpen", 1);
         BearShink.SetActive(true);
         Color c = flash.color;
         c.a = 1;
@@ -90,6 +91,18 @@ public class HUB : MonoBehaviour {
     }
 
 
+
+    public void PlaySound(string name, float volume = 1f)
+    {
+        GameObject g = new GameObject();
+        AudioSource adsrc = g.AddComponent<AudioSource>();
+        g.transform.position = Camera.main.transform.position;
+        adsrc.spatialBlend = 0;
+        AudioClip ac = Resources.Load("Sound/" + name) as AudioClip;
+        adsrc.clip = ac;
+        adsrc.Play();
+        Destroy(g, ac.length);
+    }
 	
 	// Update is called once per frame
 	void Update () {
