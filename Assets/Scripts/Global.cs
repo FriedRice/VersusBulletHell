@@ -94,7 +94,7 @@ public class Global : MonoBehaviour {
         for (int c = 0; c < rand; ++c)
             {
                 float xpos = Random.Range(-3.5f, 3.5f);
-                float ypos = Random.Range(-4f, 4f);
+                float ypos = Random.Range(-2.5f, 2.5f);
                 Instantiate(whirlpool, new Vector3(xpos, ypos, 0f), transform.rotation);
             }
             whirlpoolWarning.SetActive(false);
