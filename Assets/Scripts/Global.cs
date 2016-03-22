@@ -9,7 +9,9 @@ public class Global : MonoBehaviour {
     public static Global S;
 
     public GameObject wave;
-    public GameObject warning;
+    public GameObject whirlpool;
+    public GameObject tidalWaveWarning;
+    public GameObject whirlpoolWarning;
 
     public void destroyLevelEnemies(Vector2 position, string enemy_layer_prefix) {
         GameObject[] enemy_bullets = GameObject.FindGameObjectsWithTag(enemy_layer_prefix + ALLY_BULLET_LAYER_SUFFIX);
@@ -23,13 +25,29 @@ public class Global : MonoBehaviour {
         }
     }
 
-    IEnumerator makewaves()
+    IEnumerator pickRandomEvent()
     {
         while (true)
         {
             float interval = Random.Range(15f, 30f);
             yield return new WaitForSeconds(interval);
-            warning.SetActive(true);
+
+            int rand = Random.Range(1, 3);
+            switch (rand)
+            {
+                case 1:
+                    StartCoroutine(makewaves());
+                    break;
+                case 2:
+                    StartCoroutine(makeWhirlpools());
+                    break;
+            }
+        }
+    }
+
+    IEnumerator makewaves()
+    {
+            tidalWaveWarning.SetActive(true);
             EventIndicator.Panels.SetPanel(0);
             yield return new WaitForSeconds(2f);
             int rand = Random.Range(10, 20);
@@ -40,19 +58,33 @@ public class Global : MonoBehaviour {
                 float ypos = Random.Range(5f, 7f);
                 Instantiate(wave, new Vector3(xpos, ypos, 0f), transform.rotation);
             }
-            warning.SetActive(false);
-        }
+            tidalWaveWarning.SetActive(false);
+    }
+
+    IEnumerator makeWhirlpools()
+    {
+            whirlpoolWarning.SetActive(true);
+            EventIndicator.Panels.SetPanel(0);
+            yield return new WaitForSeconds(2f);
+            int rand = Random.Range(1, 3);
+
+            for (int c = 0; c < rand; ++c)
+            {
+                float xpos = Random.Range(-3.5f, 3.5f);
+                float ypos = Random.Range(-4f, 4f);
+                Instantiate(whirlpool, new Vector3(xpos, ypos, 0f), transform.rotation);
+            }
+            whirlpoolWarning.SetActive(false);
     }
 
     void Awake()
     {
-        Debug.Log("Displays connected: " + Display.displays.Length);
         S = this;
     }
 
 	// Use this for initialization
 	void Start () {
-        StartCoroutine(makewaves());
+        StartCoroutine(pickRandomEvent());
 	}
 	
 	// Update is called once per frame
