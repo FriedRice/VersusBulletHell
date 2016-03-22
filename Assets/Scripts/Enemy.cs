@@ -17,6 +17,8 @@ public class Enemy : MonoBehaviour {
     public float base_bullet_speed = 4f;
     public float Speed = 15f;
     public float bulletSpeed = 4f;
+    public float base_animespeed = 0.5f;
+    public float animspeed = 0.1f;
     public float health;
     public float time;
     public Vector3 spawn_position;

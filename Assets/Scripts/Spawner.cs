@@ -156,6 +156,9 @@ public class Spawner : MonoBehaviour {
             {
                 tutorial = false;
                 lastDiffInc = 0;
+                foreach (Player p in Player.players) {
+                    p.reset();
+                }
             }
         }
         else

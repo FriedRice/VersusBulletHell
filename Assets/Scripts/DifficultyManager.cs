@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class DifficultyManager : MonoBehaviour {
 
-    public static int MAX_DIFFICULTY_LEVEL = 7;
+    public static int MAX_DIFFICULTY_LEVEL = 6;
 
     static GameObject[] enemys = new GameObject[] {
         Resources.Load("Enemy/Fish1") as GameObject,
@@ -44,6 +44,7 @@ public class DifficultyManager : MonoBehaviour {
 
         enemy_comp.Speed = enemy_comp.base_speed * difficulty_mod;
         enemy_comp.bulletSpeed = enemy_comp.base_bullet_speed * difficulty_mod;
+        enemy_comp.animspeed = enemy_comp.base_animespeed * (1f / difficulty_mod);
         return enemy;
     }
 

@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Squid : Enemy {
     public Sprite[] idle;
-    public float animspeed = 0.1f;
 
     public GameObject bullet;
     public Transform ShootLoc;

@@ -140,6 +140,16 @@ public class Player : MonoBehaviour {
         HUB.S.UpdatePowerup();
     }
 
+    public void reset() {
+        for (int i = 1; i <= upgrade_level; ++i) {
+            weapon_upgrades[i].SendMessage("disable");
+            weapon_upgrades[i].SetActive(false);
+        }
+        upgrade_points = 0;
+        upgrade_level = 0;
+        powerup_points = 0;
+    }
+
     void ReverseControlsOther() {
         HUB.S.PlaySound("Discord", 1f);
         PowerupName = "None";
