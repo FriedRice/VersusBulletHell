@@ -58,6 +58,7 @@ public class PlayerWeapon : MonoBehaviour {
         new_bullet.tag = bullet_tag;
         new_bullet.transform.position = this.transform.position;
         new_bullet.GetComponent<Rigidbody2D>().velocity = (Vector2) this.transform.up * bullet_velocity;
+        new_bullet.GetComponent<SpriteRenderer>().color = Color.red;
         last_shot_time = Time.time;
     }
 }

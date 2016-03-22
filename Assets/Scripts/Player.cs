@@ -16,7 +16,10 @@ public class Player : MonoBehaviour {
     public int upgrade_points;
     public int powerup_points;
     public bool invincible;
+
     public bool immortal = false;
+
+    public bool controlsAreReversed = false;
     public float move_speed = 10f;
     public float move_slow_speed = 4f;
     public GameObject hit_box_marker;
@@ -71,12 +74,17 @@ public class Player : MonoBehaviour {
         }
 
     }
+
     public int POWERUPTHRESHOLD = 25;
     public bool hasPowerup = false;
     public string PowerupName = "None";
     public GameObject LASER;
     void updateMovement() {
         Vector2 move_vector = getInputMovementVector();
+        if (controlsAreReversed)
+        {
+            move_vector = -move_vector;
+        }
         if (!level_bounds.Contains(this.transform.position)) {
             this.transform.position = fitInLevelBounds(this.transform.position);
             rigid.velocity = Vector2.zero;
@@ -94,27 +102,80 @@ public class Player : MonoBehaviour {
             }
         }
 
-        if (powerup_points >= POWERUPTHRESHOLD) {
+
+        if(powerup_points >= POWERUPTHRESHOLD && !hasPowerup)
+        {
             hasPowerup = true;
-            PowerupName = "Laser";
-        } else {
-            hasPowerup = false;
-            PowerupName = "None";
+            int rng = Random.Range(-1, 1);
+            if(rng == 0)
+            {
+                PowerupName = "Laser";
+            } else { PowerupName = "Reverse Controls"; }
+        } else
+        {
+            if (powerup_points < POWERUPTHRESHOLD)
+            {
+                hasPowerup = false;
+                PowerupName = "None";
+            }
         }
 
-        if (getInputPower()) {
-            if (hasPowerup) {
-                PowerupName = "None";
-                powerup_points = 0;
-                hasPowerup = false;
-                if (gameObject.transform.position.x < 0) {
-                    Instantiate(LASER, players[1].transform.position, transform.rotation);
-                } else {
-                    Instantiate(LASER, players[0].transform.position, transform.rotation);
+        if (getInputPower())
+        {
+            if (hasPowerup)
+            {
+                if(PowerupName == "Laser")
+                {
+                    FireLaser();
+                } else if (PowerupName == "Reverse Controls")
+                {
+
+                    ReverseControlsOther();
                 }
             }
         }
         HUB.S.UpdatePowerup();
+    }
+
+    void ReverseControlsOther()
+    {
+        PowerupName = "None";
+        powerup_points = 0;
+        hasPowerup = false;
+        if(this == players[0])
+        {
+            HUB.S.FishUsedPowerupEffect();
+            // u r fish
+            GameObject g = Instantiate(Resources.Load("Reverser"), transform.position, transform.rotation) as GameObject;
+            g.GetComponent<ReverseControls>().Fish = false;
+        } else
+        {
+            HUB.S.BearUsedPowerupEffect();
+            // u r bear
+            GameObject g = Instantiate(Resources.Load("Reverser"), transform.position, transform.rotation) as GameObject;
+            g.GetComponent<ReverseControls>().Fish = true;
+        }
+    }
+
+    void FireLaser()
+    {
+        PowerupName = "None";
+        powerup_points = 0;
+        hasPowerup = false;
+        GameObject g = Instantiate(LASER, new Vector3(transform.position.x, 0, 0), transform.rotation) as GameObject;
+        if (this == players[0])
+        {
+            // u r fish
+            g.GetComponent<Laser>().ISBEAR = false;
+            HUB.S.FishUsedPowerupEffect();
+            g.transform.GetChild(0).GetComponent<ParticleSystem>().startColor = Color.red;
+        }
+        else
+        {
+            // u r ber
+            g.GetComponent<Laser>().ISBEAR = true;
+            HUB.S.BearUsedPowerupEffect();
+        }
     }
 
     void updateUpgrade() {
@@ -182,7 +243,7 @@ public class Player : MonoBehaviour {
             if ((Time.time - blink_start_time) < blink_time) {
                 blink_start_time = Time.time;
             } else {
-                invincible = true;
+                toggleInvincible(true);
                 blink_start_time = Time.time;
                 StartCoroutine(blinkAvatar());
             }
@@ -206,7 +267,11 @@ public class Player : MonoBehaviour {
             sprite_color.a = 255;
             sprite_renderer.color = sprite_color;
         }
-        invincible = false;
+        toggleInvincible(false);
+    }
+
+    protected virtual void toggleInvincible(bool enable) {
+        return;
     }
     void beginKatanaSlash() {
         other_side.GetComponent<SpriteRenderer>().sprite = twinkle;
