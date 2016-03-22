@@ -60,7 +60,9 @@ public class Enemy : MonoBehaviour {
         sr.color = bullet_color;
         bullet.transform.Find("AllySprite").gameObject.GetComponent<AllySprite>().setSprite(sr);
     }
+    public virtual void Die() {
 
+    }
     protected bool isEnemyBulletTag(string tag) {
         return tag == enemy_bullet_tag;
     }

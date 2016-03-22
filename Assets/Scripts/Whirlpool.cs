@@ -7,7 +7,7 @@ public class Whirlpool : MonoBehaviour {
     public float pullForce = 1;
     // Use this for initialization
     void Start () {
-	
+        StartCoroutine(lifetime());
 	}
 	
 	// Update is called once per frame
@@ -34,5 +34,11 @@ public class Whirlpool : MonoBehaviour {
         }
 
     }
-    
+
+    IEnumerator lifetime()
+    {
+        yield return new WaitForSeconds(12f);
+        Destroy(this.gameObject);
+    }
+
 }

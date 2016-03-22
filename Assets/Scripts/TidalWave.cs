@@ -14,6 +14,7 @@ public class TidalWave : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        StartCoroutine(lifetime());
 		if (direction == null) {
 			direction = Vector3.down;
 		}
@@ -29,4 +30,10 @@ public class TidalWave : MonoBehaviour {
 	void Update () {
         rigid.velocity = speed * direction.normalized;
 	}
+
+    IEnumerator lifetime()
+    {
+        yield return new WaitForSeconds(5f);
+        Destroy(this.gameObject);
+    }
 }

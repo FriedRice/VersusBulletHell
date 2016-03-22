@@ -57,7 +57,7 @@ public class Laser : MonoBehaviour
 
     IEnumerator animate()
     {
-        for (int c = 0; c < 3; ++c)
+        for (int c = 0; c < 10; ++c)
         {
             sr.enabled = true;
             yield return new WaitForSeconds(0.1f);

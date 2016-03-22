@@ -7,7 +7,8 @@ public class HUB : MonoBehaviour {
     public static HUB S;
 
     public Text livesLeft, livesRight, weaponLeft, weaponRight, powerupLeft, powerupRight;
-    
+    public GameObject BearShink, FishShink;
+    public Image flash;
 
     public void UpdateLives()
     {
@@ -28,8 +29,8 @@ public class HUB : MonoBehaviour {
 
     public void UpdatePowerup()
     {
-        powerupLeft.text = "Powerup Progress: " + (Player.players[0].powerup_points /(float) Player.players[0].POWERUPTHRESHOLD * 100f).ToString("F2") + "%\nAttack: " + Player.players[0].PowerupName;
-        powerupRight.text = "Powerup Progress: " + (Player.players[1].powerup_points / (float)Player.players[1].POWERUPTHRESHOLD * 100f).ToString("F2") + "%\nAttack: " + Player.players[1].PowerupName;
+        powerupLeft.text = (Player.players[0].powerup_points /(float) Player.players[0].POWERUPTHRESHOLD * 100f).ToString("F2") + "%\nAttack: " + Player.players[0].PowerupName;
+        powerupRight.text = (Player.players[1].powerup_points / (float)Player.players[1].POWERUPTHRESHOLD * 100f).ToString("F2") + "%\nAttack: " + Player.players[1].PowerupName;
 
     }
 
@@ -44,7 +45,64 @@ public class HUB : MonoBehaviour {
         UpdateWeapon();
 	}
 
+    IEnumerator animateFish()
+    {
+        PlaySound("Sharpen", 1);
+        FishShink.SetActive(true);
+        Color c = flash.color;
+        c.a = 1;
+        flash.color = c;
+        for(int d = 0; d < 5; ++d)
+        {
+            yield return new WaitForSeconds(0.01f);
+            c.a -= 0.2f;
+            flash.color = c;
+        }
+        yield return new WaitForSeconds(0.5f);
+        FishShink.SetActive(false);
+    }
 
+    IEnumerator animateBear()
+    {
+        PlaySound("Sharpen", 1);
+        BearShink.SetActive(true);
+        Color c = flash.color;
+        c.a = 1;
+        flash.color = c;
+        for (int d = 0; d < 5; ++d)
+        {
+            yield return new WaitForSeconds(0.05f);
+            c.a -= 0.2f;
+            flash.color = c;
+        }
+        yield return new WaitForSeconds(0.5f);
+        BearShink.SetActive(false);
+    }
+
+    public void FishUsedPowerupEffect()
+    {
+        StartCoroutine(animateFish());
+    }
+
+    public void BearUsedPowerupEffect()
+    {
+
+        StartCoroutine(animateBear());
+    }
+
+
+
+    public void PlaySound(string name, float volume = 1f)
+    {
+        GameObject g = new GameObject();
+        AudioSource adsrc = g.AddComponent<AudioSource>();
+        g.transform.position = Camera.main.transform.position;
+        adsrc.spatialBlend = 0;
+        AudioClip ac = Resources.Load("Sound/" + name) as AudioClip;
+        adsrc.clip = ac;
+        adsrc.Play();
+        Destroy(g, ac.length);
+    }
 	
 	// Update is called once per frame
 	void Update () {
