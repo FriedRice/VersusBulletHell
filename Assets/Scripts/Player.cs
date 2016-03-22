@@ -112,7 +112,7 @@ public class Player : MonoBehaviour {
         if (powerup_points >= POWERUPTHRESHOLD && !hasPowerup) {
             hasPowerup = true;
             int rng = Random.Range(-1, 2);
-            rng = 2;
+        //    rng = 2;
             if (rng == 0) {
                 PowerupName = "Laser";
             } else if (rng == 1) { PowerupName = "Reverse Controls"; } else {
@@ -316,6 +316,8 @@ public class Player : MonoBehaviour {
         other_side.GetComponent<CircleCollider2D>().enabled = true;
         List<GameObject> enemies = new List<GameObject>();
         enemies.Add(GameObject.FindGameObjectWithTag(Enemy_tags[0]));
+       
+        transform.Rotate(Vector3.up, 180);
         foreach (string tag in Enemy_tags) {
             GameObject[] enemy_objects = GameObject.FindGameObjectsWithTag(tag);
             foreach (GameObject enemy_object in enemy_objects)
@@ -341,6 +343,13 @@ public class Player : MonoBehaviour {
         powerup_points = 0;
         hasPowerup = false;
         ripper_mode = false;
+        if (my_number == 1) {
+            transform.rotation.Set(0, 0, 0, 0);
+            other_side.transform.rotation.Set(0, 0, 180, 0);
+        } else {
+            transform.rotation.Set(0, 0, 180, 0);
+            other_side.transform.rotation.Set(0, 0, 180, 0);
+        }
     }
     void idleAnimation() {
         slashing = false;
