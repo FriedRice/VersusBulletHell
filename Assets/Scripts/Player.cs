@@ -238,6 +238,17 @@ public class Player : MonoBehaviour {
         upgrade_points = 0;
         upgrade_level = 0;
         HUB.S.PlaySound("BearDies", 1f);
+        if(this == players[0])
+        {
+            // fish
+            GameObject g = Instantiate(Resources.Load("LoseLife")) as GameObject;
+            g.GetComponent<PlayerFollowLife>().FollowsFish = true;
+        } else
+        {
+            GameObject g = Instantiate(Resources.Load("LoseLife")) as GameObject;
+            g.GetComponent<PlayerFollowLife>().FollowsFish = false;
+
+        }
         if (lives == 0) {
             Destroy(this.gameObject);
         } else {
