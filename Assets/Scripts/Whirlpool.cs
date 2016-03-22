@@ -18,7 +18,7 @@ public class Whirlpool : MonoBehaviour {
             Vector2 forceDirection = transform.position - collider.transform.position;
             
             // apply force on target towards me
-            float inverse = 1f / forceDirection.magnitude;
+            float inverse = 1f / Mathf.Pow(forceDirection.magnitude, 1.5f);
             if (collider.gameObject.tag != "Whirlpool" && collider.gameObject.tag != "other_side" && collider.gameObject.tag != "LevelBounds")
             {
                 collider.GetComponent<Rigidbody2D>().AddForce(10f * inverse * forceDirection * pullForce * Time.fixedDeltaTime);
