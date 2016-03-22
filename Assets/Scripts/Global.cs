@@ -91,13 +91,18 @@ public class Global : MonoBehaviour {
             int rand = Random.Range(1, 3);
 
         HUB.S.PlaySound("TidalWaves", 1f);
-        for (int c = 0; c < rand; ++c)
+        for (int i = 0; i < Random.Range(1, 3); i++)
+        {
+            for (int c = 0; c < rand; ++c)
             {
                 float xpos = Random.Range(-3.5f, 3.5f);
                 float ypos = Random.Range(-2.5f, 2.5f);
                 Instantiate(whirlpool, new Vector3(xpos, ypos, 0f), transform.rotation);
             }
-            whirlpoolWarning.SetActive(false);
+            yield return new WaitForSeconds(6f);
+        }
+        
+        whirlpoolWarning.SetActive(false);
     }
 
     void Awake()
