@@ -31,7 +31,8 @@ public class Player : MonoBehaviour {
     float blink_start_time;
     string enemy_layer_prefix;
     Color base_sprite_color;
-    bool ripper_mode = false;
+    Color base_other_color;
+    public bool ripper_mode = false;
     bool slashing = false;
     public delegate void WeaponFireDelegate();
     public WeaponFireDelegate fireDelegate;
@@ -50,6 +51,7 @@ public class Player : MonoBehaviour {
         rigid = GetComponent<Rigidbody2D>();
         sprite_renderer = GetComponent<SpriteRenderer>();
         other_side_sprite_renderer = other_side_sprite.GetComponent<SpriteRenderer>();
+        base_other_color = other_side_sprite_renderer.color;
         other_side = transform.Find("other_side").gameObject;
         upgrade_level = 0;
         invincible = false;
@@ -112,7 +114,7 @@ public class Player : MonoBehaviour {
 
         if (powerup_points >= POWERUPTHRESHOLD && !hasPowerup) {
             hasPowerup = true;
-            int rng = Random.Range(-1, 2);
+            int rng = Random.Range(-1, 3);
         //    rng = 2;
             if (rng == 0) {
                 PowerupName = "Laser";
@@ -271,17 +273,18 @@ public class Player : MonoBehaviour {
         Color sprite_color = base_sprite_color;
         while ((Time.time - blink_start_time) < blink_time) {
             if (sprite_renderer.color.a == 0) {
-                sprite_color.a = 255;
+                sprite_renderer.color = base_sprite_color;
+                other_side_sprite_renderer.color = base_other_color;
             } else {
                 sprite_color.a = 0;
+                sprite_renderer.color = sprite_color;
+                other_side_sprite_renderer.color = sprite_color;
             }
-            sprite_renderer.color = sprite_color;
-            other_side_sprite_renderer.color = sprite_color;
             yield return new WaitForSeconds(blink_interval);
         }
 
         sprite_renderer.color = base_sprite_color;
-        other_side_sprite_renderer.color = base_sprite_color;
+        other_side_sprite_renderer.color = base_other_color;
         toggleInvincible(false);
     }
 
