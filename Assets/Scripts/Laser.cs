@@ -57,6 +57,8 @@ public class Laser : MonoBehaviour
 
     IEnumerator animate()
     {
+
+        HUB.S.PlaySound("Alarm", 1f);
         for (int c = 0; c < 10; ++c)
         {
             sr.enabled = true;
@@ -66,6 +68,8 @@ public class Laser : MonoBehaviour
         }
         yield return new WaitForSeconds(0.5f);
         ps.Play();
+
+        HUB.S.PlaySound("Laser", 1f);
         col.enabled = true;
         yield return new WaitForSeconds(0.3f);
         Destroy(gameObject);

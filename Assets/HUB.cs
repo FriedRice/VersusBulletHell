@@ -100,6 +100,7 @@ public class HUB : MonoBehaviour {
         adsrc.spatialBlend = 0;
         AudioClip ac = Resources.Load("Sound/" + name) as AudioClip;
         adsrc.clip = ac;
+        adsrc.volume = volume;
         adsrc.Play();
         Destroy(g, ac.length);
     }
