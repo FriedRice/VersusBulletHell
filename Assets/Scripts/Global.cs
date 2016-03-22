@@ -12,6 +12,11 @@ public class Global : MonoBehaviour {
     public GameObject whirlpool;
     public GameObject tidalWaveWarning;
     public GameObject whirlpoolWarning;
+    public bool enableEvents;
+    GameObject spawner1;
+    GameObject spawner2;
+    public bool player1tut;
+    public bool player2tut;
 
     public float gameTimer;
 
@@ -34,6 +39,7 @@ public class Global : MonoBehaviour {
             float interval = Random.Range(15f, 30f);
             yield return new WaitForSeconds(interval);
 
+            if (!enableEvents) yield break;
             int rand = Random.Range(1, 3);
             switch (rand)
             {
@@ -90,6 +96,9 @@ public class Global : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         gameTimer = 0;
+        enableEvents = false;
+        spawner1 = GameObject.Find("Spawner");
+        spawner2 = GameObject.Find("Spawner (1)");
         StartCoroutine(pickRandomEvent());
         Instantiate(Resources.Load("FullFish"));
         Instantiate(Resources.Load("FullBear"));
@@ -98,5 +107,8 @@ public class Global : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         gameTimer += Time.deltaTime;
-	}
+        player1tut = spawner1.GetComponent<Spawner>().tutorial;
+        player2tut = spawner2.GetComponent<Spawner>().tutorial;
+        if (!player1tut && !player2tut) enableEvents = true;
+    }
 }
