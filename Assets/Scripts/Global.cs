@@ -120,10 +120,32 @@ public class Global : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         gameTimer += Time.deltaTime;
+        if(gameTimer < 1)
+        {
+            HUB.S.countdownLeft.text = "3";
+            HUB.S.countdownRight.text = "3";
+        }
+        if(gameTimer >= 1 && gameTimer < 2)
+        {
+            HUB.S.countdownLeft.text = "2";
+            HUB.S.countdownRight.text = "2";
+        }
+        if (gameTimer >= 2 && gameTimer < 3)
+        {
+            HUB.S.countdownLeft.text = "1";
+            HUB.S.countdownRight.text = "1";
+        }
         if (gameTimer > 3)
         {
+            HUB.S.countdownLeft.text = "GO";
+            HUB.S.countdownRight.text = "GO";
             spawner1.SetActive(true);
             spawner2.SetActive(true);
+        }
+        if(gameTimer > 4)
+        {
+            HUB.S.countdownLeft.text = "";
+            HUB.S.countdownRight.text = "";
         }
         player1tut = spawner1.GetComponent<Spawner>().tutorial;
         player2tut = spawner2.GetComponent<Spawner>().tutorial;
