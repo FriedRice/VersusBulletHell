@@ -13,6 +13,10 @@ public class Enemy : MonoBehaviour {
     Color FISH_BULLET_COLOR = Color.red;
     Color BEAR_BULLET_COLOR = Color.white;
 
+    public float base_speed = 15f;
+    public float base_bullet_speed = 4f;
+    public float Speed = 15f;
+    public float bulletSpeed = 4f;
     public float health;
     public float time;
     public Vector3 spawn_position;

@@ -8,11 +8,7 @@ public class Fish1 : Enemy {
     public GameObject bullet;
     public Transform ShootLoc;
 
-    public float Speed = 15f;
-
     public float movementBoundXLeft, movementBoundXright, movementBoundYTop, movementBoundYBot;
-
-    public float bulletSpeed = 4f;
 
     public int HEALTH = 15;
     public Sprite bear_sprite;

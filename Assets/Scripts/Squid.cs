@@ -8,11 +8,9 @@ public class Squid : Enemy {
     public GameObject bullet;
     public Transform ShootLoc;
 
-    public float Speed = 15f;
 
     public float movementBoundXLeft, movementBoundXright, movementBoundYTop, movementBoundYBot;
 
-    public float bulletSpeed = 4f;
     public Sprite bear_sprite;
     public int HEALTH = 55;
 
