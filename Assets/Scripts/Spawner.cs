@@ -6,11 +6,9 @@ public class Spawner : MonoBehaviour {
     public List<GameObject> fish_list;
     public List<GameObject> units;
     public int max_fish = 6;
-    float more_fish_delay = 15;
-    float more_fish_counter = 0;
     // Use this for initialization
-    public float delay = 10;
-    public float timer = 0;
+    public float delay;
+    public float timer;
     public bool tutorial = true;
     public int tutFishCount = 0;
     public bool mode_3d_left = false;
@@ -24,7 +22,7 @@ public class Spawner : MonoBehaviour {
     const float BOUND_Y = 10;
 
     void Start() {
-        timer = delay - 3;
+        timer = 0;
     }
     void Awake() {
         left_cam = GameObject.Find("CamLeft");
@@ -131,17 +129,11 @@ public class Spawner : MonoBehaviour {
             Destroy(enemy);
         }
 
-        if (delay > 1) {
-            delay -= 0.3f;
-        }
+        //if (delay > 1) {
+        //    delay -= 0.3f;
+        //}
 
-        if (more_fish_counter < more_fish_delay) {
-            more_fish_counter++;
-        }
-        else {
-            //  max_fish++;
-            more_fish_counter = 0;
-        }
+        
     }
 
     void TutorialMakeFish(int i)
@@ -168,11 +160,6 @@ public class Spawner : MonoBehaviour {
         units.Add(enemy);
         enemy.GetComponent<Enemy>().Initialize(temp);
         
-        //if (delay > 1)
-        //{
-        //    delay -= 0.3f;
-        //}
-
     }
 
     // Update is called once per frame
