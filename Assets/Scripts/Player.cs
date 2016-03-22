@@ -43,6 +43,7 @@ public class Player : MonoBehaviour {
     protected int my_number;
     public Sprite idle, idle_back, twinkle, slash, slash_back;
     public List<string> Enemy_tags; //enemy player followed by enemy minions followed by enemy bullets
+    public Color soul_color;
 
     // Use this for initialization
     protected virtual void Start() {
@@ -298,12 +299,17 @@ public class Player : MonoBehaviour {
     void enableKatana() {
         if (ripper_mode == false) {
             ripper_mode = true;
+            sprite_renderer.color = soul_color;
+            other_side_sprite_renderer.color = soul_color;
             if (this == players[0]) {
                 HUB.S.FishUsedPowerupEffect();
+                GameObject g = Instantiate(Resources.Load("Swords")) as GameObject;
                 // u r fish
             } else {
                 HUB.S.BearUsedPowerupEffect();
                 // u r bear
+                GameObject g = Instantiate(Resources.Load("Swords")) as GameObject;
+                g.GetComponent<Swords>().Fish = true;
             }
             Invoke("disableKatana", katana_duration);
         } else {
@@ -338,6 +344,8 @@ public class Player : MonoBehaviour {
                 GameObject target = enemies[i].gameObject;
                 if (target.tag == Enemy_tags[0]) {
                     target.GetComponent<Player>().loseLife();
+                    disableKatana();
+
                 } else if (target.tag == Enemy_tags[1])
                     target.GetComponent<Enemy>().Die();
                 else if (target.tag == Enemy_tags[2])
@@ -347,10 +355,20 @@ public class Player : MonoBehaviour {
         other_side.GetComponent<SpriteRenderer>().sprite = slash;
         sprite_renderer.sprite = slash_back;
         Invoke("idleAnimation", 0.2f);
+        Invoke("katanaRefresh", 3f);
+    }
+    void katanaRefresh() {
+        slashing = false;
+        if (ripper_mode == true) {
+            sprite_renderer.color = soul_color;
+            other_side_sprite_renderer.color = soul_color;
+        }
     }
     void disableKatana() {
         PowerupName = "None";
         powerup_points = 0;
+        sprite_renderer.color = base_sprite_color;
+        other_side_sprite_renderer.color = base_sprite_color;
         hasPowerup = false;
         ripper_mode = false;
         if (my_number == 1) {
@@ -362,7 +380,8 @@ public class Player : MonoBehaviour {
         }
     }
     void idleAnimation() {
-        slashing = false;
+        sprite_renderer.color = base_sprite_color;
+        other_side_sprite_renderer.color = base_sprite_color;
         other_side.GetComponent<CircleCollider2D>().enabled = false;
         other_side.GetComponent<SpriteRenderer>().sprite = idle_back;
         if (!immortal)
