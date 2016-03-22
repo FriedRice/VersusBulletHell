@@ -61,12 +61,25 @@ public class Global : MonoBehaviour {
             yield return new WaitForSeconds(2f);
             int rand = Random.Range(10, 20);
         HUB.S.PlaySound("TidalWaves", 1f);
-            for (int c = 0; c < rand; ++c)
+        GameObject measurer = new GameObject();
+        measurer.transform.position = new Vector3(0, 0, 0);
+        measurer.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Random.Range(0f, 360f)));
+        measurer.transform.position += measurer.transform.up * 10f;
+        print(measurer.transform.position);
+        for (int c = 0; c < rand; ++c)
             {
-                float xpos = Random.Range(-9f, 9f);
-                float ypos = Random.Range(5f, 7f);
-                Instantiate(wave, new Vector3(xpos, ypos, 0f), transform.rotation);
-            }
+            float rnjesus = Random.Range(-5f, 5f);
+            Vector3 slammer = measurer.transform.position + measurer.transform.right * rnjesus;
+                GameObject g = Instantiate(wave, new Vector3(slammer.x, slammer.y, 0f), transform.rotation) as GameObject;
+            
+                TidalWave tw = g.GetComponent<TidalWave>();
+            Vector3 dir = ((Vector3.zero + Vector3.up * Random.Range(-6f,6f) + Vector3.right * Random.Range(-6f,6f) )- g.transform.position);
+            tw.direction = dir;
+            g.GetComponent<Rigidbody2D>().velocity = dir * Random.Range(0.9f,1.4f);
+            float rot_z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            g.transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90f);
+        }
+        Destroy(measurer);
             tidalWaveWarning.SetActive(false);
     }
 
