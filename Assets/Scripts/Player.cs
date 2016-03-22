@@ -139,6 +139,7 @@ public class Player : MonoBehaviour {
 
     void ReverseControlsOther()
     {
+        HUB.S.PlaySound("Discord", 1f);
         PowerupName = "None";
         powerup_points = 0;
         hasPowerup = false;
