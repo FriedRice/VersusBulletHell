@@ -47,11 +47,12 @@ public class Global : MonoBehaviour {
 
     IEnumerator makewaves()
     {
-            tidalWaveWarning.SetActive(true);
+        HUB.S.PlaySound("Siren", 1f);
+        tidalWaveWarning.SetActive(true);
             EventIndicator.Panels.SetPanel(0);
             yield return new WaitForSeconds(2f);
             int rand = Random.Range(10, 20);
-
+        HUB.S.PlaySound("TidalWaves", 1f);
             for (int c = 0; c < rand; ++c)
             {
                 float xpos = Random.Range(-9f, 9f);
@@ -63,12 +64,14 @@ public class Global : MonoBehaviour {
 
     IEnumerator makeWhirlpools()
     {
-            whirlpoolWarning.SetActive(true);
+        HUB.S.PlaySound("Siren", 1f);
+        whirlpoolWarning.SetActive(true);
             EventIndicator.Panels.SetPanel(0);
             yield return new WaitForSeconds(2f);
             int rand = Random.Range(1, 3);
 
-            for (int c = 0; c < rand; ++c)
+        HUB.S.PlaySound("TidalWaves", 1f);
+        for (int c = 0; c < rand; ++c)
             {
                 float xpos = Random.Range(-3.5f, 3.5f);
                 float ypos = Random.Range(-4f, 4f);
