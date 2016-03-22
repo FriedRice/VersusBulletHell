@@ -41,7 +41,9 @@ public class Enemy : MonoBehaviour {
         bullet.layer = bullet_layer;
         bullet.tag = bullet_tag;
     }
+    public virtual void Die() {
 
+    }
     protected bool isEnemyBulletTag(string tag) {
         return tag == enemy_bullet_tag;
     }

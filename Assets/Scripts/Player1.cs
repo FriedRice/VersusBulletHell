@@ -11,7 +11,6 @@ public class Player1 : Player {
     const float X_MAX = 4.4f;
     const float Y_MIN = -4.75f;
     const float Y_MAX = 4.75f;
-    int my_number = 1;
 
     struct controls {
         public string up, vert, hor;
@@ -23,6 +22,7 @@ public class Player1 : Player {
         S = this;
         Player.players[0] = S;
         Player.player_go_dict[S.gameObject] = S;
+        my_number = 1;
     }
 
     protected override void Start() {
@@ -34,6 +34,8 @@ public class Player1 : Player {
         my_inputs.fire1 = string.Format("Fire1{0}", my_number);
         my_inputs.fire2 = string.Format("Fire2{0}", my_number);
         my_inputs.fire3 = string.Format("Fire3{0}", my_number);
+        idle = sprite_renderer.sprite;
+        slash = Resources.Load("FishFrontSlash")as Sprite;
     }
 
     protected override bool isEnemyAllyTag(string tag) {

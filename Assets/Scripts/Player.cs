@@ -16,28 +16,31 @@ public class Player : MonoBehaviour {
     public int upgrade_points;
     public int powerup_points;
     public bool invincible;
-
+    public bool immortal = false;
     public float move_speed = 10f;
     public float move_slow_speed = 4f;
     public GameObject hit_box_marker;
     protected Bounds level_bounds;
     Rigidbody2D rigid;
-    SpriteRenderer sprite_renderer;
+    protected SpriteRenderer sprite_renderer;
     float blink_start_time;
     string enemy_layer_prefix;
 
     public delegate void WeaponFireDelegate();
     public WeaponFireDelegate fireDelegate;
-
+    GameObject other_side;
     public AudioClip fireSound1;
     public AudioClip fireSound2;
     public AudioClip powerupSound;
     public AudioClip upgradeSound;
-
+    protected int my_number;
+    protected Sprite idle, twinkle, slash, slash_back;
+    List<string> Enemy_tags; //enemy player followed by enemy minions followed by enemy bullets
     // Use this for initialization
-    protected virtual void Start () {
+    protected virtual void Start() {
         rigid = GetComponent<Rigidbody2D>();
         sprite_renderer = GetComponent<SpriteRenderer>();
+        other_side = transform.Find("other_side").gameObject;
         upgrade_level = 0;
         invincible = false;
         blink_start_time = -9999999;
@@ -51,7 +54,9 @@ public class Player : MonoBehaviour {
         } else {
             enemy_layer_prefix = "Fish";
         }
-	}
+        if (immortal)
+            invincible = true;
+    }
 
     // Update is called once per frame
     void Update() {
@@ -59,13 +64,12 @@ public class Player : MonoBehaviour {
         updateUpgrade();
 
         if (getInputFire() && fireDelegate != null) {
-            if (!SoundManager.instance.efxSource.isPlaying)
-            {
+            if (!SoundManager.instance.efxSource.isPlaying) {
                 SoundManager.instance.RandomizeSfx(fireSound1, fireSound2);
             }
             fireDelegate();
         }
-        
+
     }
     public int POWERUPTHRESHOLD = 25;
     public bool hasPowerup = false;
@@ -90,28 +94,22 @@ public class Player : MonoBehaviour {
             }
         }
 
-        if(powerup_points >= POWERUPTHRESHOLD)
-        {
+        if (powerup_points >= POWERUPTHRESHOLD) {
             hasPowerup = true;
             PowerupName = "Laser";
-        } else
-        {
+        } else {
             hasPowerup = false;
             PowerupName = "None";
         }
 
-        if (getInputPower())
-        {
-            if (hasPowerup)
-            {
+        if (getInputPower()) {
+            if (hasPowerup) {
                 PowerupName = "None";
                 powerup_points = 0;
                 hasPowerup = false;
-                if(gameObject.transform.position.x < 0)
-                {
+                if (gameObject.transform.position.x < 0) {
                     Instantiate(LASER, players[1].transform.position, transform.rotation);
-                } else
-                {
+                } else {
                     Instantiate(LASER, players[0].transform.position, transform.rotation);
                 }
             }
@@ -125,7 +123,7 @@ public class Player : MonoBehaviour {
             return;
         }
 
-        for (int i = 0; i <= current_upgrade_level ; ++i) {
+        for (int i = 0; i <= current_upgrade_level; ++i) {
             weapon_upgrades[i].SetActive(true);
             weapon_upgrades[i].SendMessage("reset");
         }
@@ -209,6 +207,42 @@ public class Player : MonoBehaviour {
             sprite_renderer.color = sprite_color;
         }
         invincible = false;
+    }
+    void beginKatanaSlash() {
+        other_side.GetComponent<SpriteRenderer>().sprite = twinkle;
+        invincible = true;
+        Invoke("performSlash", 0.33f);
+
+
+    }
+    void performSlash() {
+       // GameObject katana = transform.Find("katana").gameObject;
+    //    katana.transform.rot
+      //  katana.GetComponent<BoxCollider2D>().enabled = true;
+        other_side.GetComponent<CircleCollider2D>().enabled = true;
+        List<GameObject> enemies = new List<GameObject>();
+        foreach(string tag in Enemy_tags)
+        {
+            GameObject[] enemy_objects = GameObject.FindGameObjectsWithTag(tag);
+            foreach(GameObject enemy_object in enemy_objects) enemies.Add(enemy_object);
+        }
+        for (int i = enemies.Count - 1; i > 0; i--) {
+            if (other_side.GetComponent<CircleCollider2D>().bounds.Contains(enemies[i].transform.position)) {
+                GameObject target = enemies[i].gameObject;
+                if (target.tag == Enemy_tags[0]) {
+                    target.GetComponent<Player>().loseLife();
+                } else if (target.tag == Enemy_tags[1])
+                    target.GetComponent<Enemy>().Die();
+                else if (target.tag == Enemy_tags[2])
+                    target.GetComponent<BulletSprite>().Dissipate();
+            }
+        }
+
+    }
+
+    void idleAnimation() {
+        if (!immortal)
+            invincible = false;
     }
 
     protected virtual bool isEnemyAllyTag(string tag) {
