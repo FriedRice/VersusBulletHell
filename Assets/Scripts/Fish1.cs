@@ -52,7 +52,9 @@ public class Fish1 : Enemy {
     }
 
     public void OnTriggerEnter2D(Collider2D collision) {
-        if (base.isEnemyBulletTag(collision.gameObject.tag)) {
+        if (base.isEnemyBulletTag(collision.gameObject.tag))
+        {
+            GetHurtFlash();
             HEALTH -= 1;
             Destroy(collision.gameObject);
             if (HEALTH <= 0) {

@@ -24,6 +24,18 @@ public class Enemy : MonoBehaviour {
     string enemy_bullet_tag;
     SpriteRenderer sr;
 
+    IEnumerator Flash()
+    {
+        sr.enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        sr.enabled = true;
+    }
+
+    public void GetHurtFlash()
+    {
+        StartCoroutine(Flash());
+    }
+
     public void Initialize(Vector3 new_spawn_pos) {
         string layer_prefix;
         spawn_position = new_spawn_pos;
