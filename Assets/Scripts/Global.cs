@@ -88,7 +88,7 @@ public class Global : MonoBehaviour {
         whirlpoolWarning.SetActive(true);
             EventIndicator.Panels.SetPanel(0);
             yield return new WaitForSeconds(2f);
-            int rand = Random.Range(1, 3);
+            int rand = Random.Range(1, 1);
 
         HUB.S.PlaySound("TidalWaves", 1f);
         for (int i = 0; i < Random.Range(1, 3); i++)
