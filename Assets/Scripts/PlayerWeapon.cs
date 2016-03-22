@@ -1,8 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerWeapon : MonoBehaviour {
     const string BULLET_LAYER_SUFFIX = "Bullet";
+
+    Dictionary<string, Color> TAG_BULLET_COLORS = new Dictionary<string, Color>() {
+        {"FishPlayer", Color.red },
+        {"BearPlayer", Color.white }
+    };
 
     public string bullet_prefab_name;
     public float delay_between_shots;
@@ -15,6 +21,7 @@ public class PlayerWeapon : MonoBehaviour {
     Object bullet_prefab;
     Rigidbody2D player_rigid;
     bool added_to_fire_delegate;
+    Color bullet_color;
 
 	// Use this for initialization
 	protected virtual void Start () {
@@ -25,6 +32,8 @@ public class PlayerWeapon : MonoBehaviour {
         bullet_layer = LayerMask.NameToLayer(bullet_tag);
         last_shot_time = 0;
         added_to_fire_delegate = false;
+
+        bullet_color = TAG_BULLET_COLORS[weapon_player.gameObject.tag];
     }
 	
 	// Update is called once per frame
@@ -58,7 +67,7 @@ public class PlayerWeapon : MonoBehaviour {
         new_bullet.tag = bullet_tag;
         new_bullet.transform.position = this.transform.position;
         new_bullet.GetComponent<Rigidbody2D>().velocity = (Vector2) this.transform.up * bullet_velocity;
-        new_bullet.GetComponent<SpriteRenderer>().color = Color.red;
+        new_bullet.GetComponent<SpriteRenderer>().color = bullet_color;
         last_shot_time = Time.time;
     }
 }
