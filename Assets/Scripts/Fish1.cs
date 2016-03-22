@@ -15,16 +15,14 @@ public class Fish1 : Enemy {
     public float bulletSpeed = 4f;
 
     public int HEALTH = 15;
-    public GameObject greenPowerup, bluePowerup;
     public Sprite bear_sprite;
     public Vector3 nextdest;
 
     Rigidbody2D rb;
-    SpriteRenderer sr;
 
     // Use this for initialization
     void Start() {
-        sr = GetComponent<SpriteRenderer>();
+        SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
         StartCoroutine(animate());
         CalculateNextPosition();
         rb = GetComponent<Rigidbody2D>();
@@ -32,23 +30,8 @@ public class Fish1 : Enemy {
         if (transform.position.y > 0) {
             base.setSprite(bear_sprite);
         } else {
-            base.setSprite(sr.sprite);
+            base.setSprite(sprite_renderer.sprite);
         }
-    }
-
-    void Die() {
-        int rng = Mathf.CeilToInt(Random.Range(0f, 10f));
-        for (int c = 0; c < rng; ++c) {
-            float ranx = Random.Range(-1f, 1f);
-            float rany = Random.Range(-1f, 1f);
-            Instantiate(greenPowerup, new Vector3(transform.position.x + ranx, transform.position.y + rany, transform.position.z), transform.rotation);
-        }
-        for (int c = 0; c < rng; ++c) {
-            float ranx = Random.Range(-1f, 1f);
-            float rany = Random.Range(-1f, 1f);
-            Instantiate(bluePowerup, new Vector3(transform.position.x + ranx, transform.position.y + rany, transform.position.z), transform.rotation);
-        }
-        Destroy(gameObject);
     }
 
     public void OnTriggerEnter2D(Collider2D collision) {

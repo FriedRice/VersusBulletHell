@@ -20,19 +20,25 @@ public class Enemy : MonoBehaviour {
     protected Color bullet_color;
 
     int bullet_layer;
+    int block_layer;
     string bullet_tag;
     string enemy_bullet_tag;
-    SpriteRenderer sr;
+    protected SpriteRenderer sr;
+    GameObject upgradeBlock;
+    GameObject powerBlock;
 
-    IEnumerator Flash()
-    {
+    void Awake() {
+        upgradeBlock = (GameObject) Resources.Load("Pblue");
+        powerBlock = (GameObject) Resources.Load("Pgreen");
+    }
+
+    IEnumerator Flash() {
         sr.enabled = false;
         yield return new WaitForSeconds(0.1f);
         sr.enabled = true;
     }
 
-    public void GetHurtFlash()
-    {
+    public void GetHurtFlash() {
         StartCoroutine(Flash());
     }
 
@@ -47,10 +53,12 @@ public class Enemy : MonoBehaviour {
             layer_prefix = FISH_LAYER_PREFIX;
             enemy_bullet_tag = BEAR_LAYER_PREFIX + ENEMY_BULLET_SUFFIX;
             bullet_color = FISH_BULLET_COLOR;
+            block_layer = LayerMask.NameToLayer("BearEnemyDrops");
         } else {
             layer_prefix = BEAR_LAYER_PREFIX;
             enemy_bullet_tag = FISH_LAYER_PREFIX + ENEMY_BULLET_SUFFIX;
             bullet_color = BEAR_BULLET_COLOR;
+            block_layer = LayerMask.NameToLayer("FishEnemyDrops");
         }
 
         gameObject.tag = layer_prefix + ALLY_LAYER_SUFFIX;
@@ -73,8 +81,25 @@ public class Enemy : MonoBehaviour {
         bullet.transform.Find("AllySprite").gameObject.GetComponent<AllySprite>().setSprite(sr);
     }
 
-    public virtual void Die() {
+    public void Die() {
+        float ranx, rany;
+        int rng = Mathf.CeilToInt(Random.Range(0f, 10f));
+        for (int c = 0; c < rng; ++c) {
+            ranx = Random.Range(-1f, 1f);
+            rany = Random.Range(-1f, 1f);
+            GameObject upgrade_block_go = Instantiate(upgradeBlock,
+                new Vector3(transform.position.x + ranx, transform.position.y + rany, transform.position.z),
+                transform.rotation) as GameObject;
+            upgrade_block_go.layer = block_layer;
 
+            ranx = Random.Range(-1f, 1f);
+            rany = Random.Range(-1f, 1f);
+            GameObject power_block_go = Instantiate(powerBlock,
+                new Vector3(transform.position.x + ranx, transform.position.y + rany, transform.position.z),
+                transform.rotation) as GameObject;
+            power_block_go.layer = block_layer;
+        }
+        Destroy(gameObject);
     }
 
     protected bool isEnemyBulletTag(string tag) {

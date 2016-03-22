@@ -276,7 +276,6 @@ public class Player : MonoBehaviour {
         }
 
         if (sprite_renderer.color.a == 0) {
-            sprite_color.a = 255;
             sprite_renderer.color = sprite_color;
         }
         toggleInvincible(false);
@@ -285,13 +284,13 @@ public class Player : MonoBehaviour {
     protected virtual void toggleInvincible(bool enable) {
         return;
     }
+
     void beginKatanaSlash() {
         other_side.GetComponent<SpriteRenderer>().sprite = twinkle;
         invincible = true;
         Invoke("performSlash", 0.33f);
-
-
     }
+
     void performSlash() {
        // GameObject katana = transform.Find("katana").gameObject;
     //    katana.transform.rot

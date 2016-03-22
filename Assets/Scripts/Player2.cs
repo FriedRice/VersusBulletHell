@@ -19,11 +19,13 @@ public class Player2 : Player {
     const float X_MAX = 4.4f;
     const float Y_MIN = -4.75f;
     const float Y_MAX = 4.75f;
+
     struct controls {
         public string up, vert, hor;
         public string fire1, fire2, fire3;
     };
     controls my_inputs;
+
     void Awake() {
         S = this;
         Player.players[1] = S;

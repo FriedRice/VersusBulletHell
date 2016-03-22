@@ -14,26 +14,9 @@ public class Squid : Enemy {
 
     public float bulletSpeed = 4f;
     public Sprite bear_sprite;
-    public GameObject greenPowerup, bluePowerup;
     public int HEALTH = 55;
 
     Rigidbody2D rb;
-    SpriteRenderer sr;
-
-    void Die() {
-        int rng = Mathf.CeilToInt(Random.Range(0f, 10f));
-        for (int c = 0; c < rng; ++c) {
-            float ranx = Random.Range(-1f, 1f);
-            float rany = Random.Range(-1f, 1f);
-            Instantiate(greenPowerup, new Vector3(transform.position.x + ranx, transform.position.y + rany, transform.position.z), transform.rotation);
-        }
-        for (int c = 0; c < rng; ++c) {
-            float ranx = Random.Range(-1f, 1f);
-            float rany = Random.Range(-1f, 1f);
-            Instantiate(bluePowerup, new Vector3(transform.position.x + ranx, transform.position.y + rany, transform.position.z), transform.rotation);
-        }
-        Destroy(gameObject);
-    }
 
     public void OnTriggerEnter2D(Collider2D collision) {
         if (base.isEnemyBulletTag(collision.gameObject.tag))
@@ -50,7 +33,7 @@ public class Squid : Enemy {
     // Use this for initialization
     void Start() {
         rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
         StartCoroutine(animate());
 
         if (transform.position.y > 0) {
