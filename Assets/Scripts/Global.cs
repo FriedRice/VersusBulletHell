@@ -99,6 +99,8 @@ public class Global : MonoBehaviour {
         enableEvents = false;
         spawner1 = GameObject.Find("Spawner");
         spawner2 = GameObject.Find("Spawner (1)");
+        spawner1.SetActive(false);
+        spawner2.SetActive(false);
         StartCoroutine(pickRandomEvent());
         Instantiate(Resources.Load("FullFish"));
         Instantiate(Resources.Load("FullBear"));
@@ -107,6 +109,11 @@ public class Global : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         gameTimer += Time.deltaTime;
+        if (gameTimer > 3)
+        {
+            spawner1.SetActive(true);
+            spawner2.SetActive(true);
+        }
         player1tut = spawner1.GetComponent<Spawner>().tutorial;
         player2tut = spawner2.GetComponent<Spawner>().tutorial;
         if (!player1tut && !player2tut) enableEvents = true;

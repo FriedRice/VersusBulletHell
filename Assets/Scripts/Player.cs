@@ -16,7 +16,7 @@ public class Player : MonoBehaviour {
     public int upgrade_points;
     public int powerup_points;
     public bool invincible;
-
+    public float katana_duration = 15f;
     public bool immortal = false;
 
     public bool controlsAreReversed = false;
@@ -31,17 +31,18 @@ public class Player : MonoBehaviour {
     float blink_start_time;
     string enemy_layer_prefix;
     Color base_sprite_color;
-
+    bool ripper_mode = false;
+    bool slashing = false;
     public delegate void WeaponFireDelegate();
     public WeaponFireDelegate fireDelegate;
-   protected GameObject other_side;
+    protected GameObject other_side;
     public AudioClip fireSound1;
     public AudioClip fireSound2;
     public AudioClip powerupSound;
     public AudioClip upgradeSound;
     protected int my_number;
     public Sprite idle, idle_back, twinkle, slash, slash_back;
-    List<string> Enemy_tags; //enemy player followed by enemy minions followed by enemy bullets
+    public List<string> Enemy_tags; //enemy player followed by enemy minions followed by enemy bullets
 
     // Use this for initialization
     protected virtual void Start() {
@@ -111,11 +112,11 @@ public class Player : MonoBehaviour {
         if (powerup_points >= POWERUPTHRESHOLD && !hasPowerup) {
             hasPowerup = true;
             int rng = Random.Range(-1, 2);
+        //    rng = 2;
             if (rng == 0) {
                 PowerupName = "Laser";
-            } else if (rng == 1) { PowerupName = "Reverse Controls"; } 
-            else {
-
+            } else if (rng == 1) { PowerupName = "Reverse Controls"; } else {
+                PowerupName = "Katana";
             }
         } else {
             if (powerup_points < POWERUPTHRESHOLD) {
@@ -131,6 +132,8 @@ public class Player : MonoBehaviour {
                 } else if (PowerupName == "Reverse Controls") {
 
                     ReverseControlsOther();
+                } else if (PowerupName == "Katana") {
+                    enableKatana();
                 }
             }
         }
@@ -206,8 +209,7 @@ public class Player : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D coll) {
-        if (coll.gameObject.tag == "UpgradeBlock")
-        {
+        if (coll.gameObject.tag == "UpgradeBlock") {
             HUB.S.PlaySound("PowerupGet", 0.1f);
             ++upgrade_points;
             Destroy(coll.gameObject);
@@ -283,10 +285,28 @@ public class Player : MonoBehaviour {
         return;
     }
 
+    void enableKatana() {
+        if (ripper_mode == false) {
+            ripper_mode = true;
+            if (this == players[0]) {
+                HUB.S.FishUsedPowerupEffect();
+                // u r fish
+            } else {
+                HUB.S.BearUsedPowerupEffect();
+                // u r bear
+            }
+            Invoke("disableKatana", katana_duration);
+        } else {
+            beginKatanaSlash();
+        }
+    }
     void beginKatanaSlash() {
-        other_side.GetComponent<SpriteRenderer>().sprite = twinkle;
-        invincible = true;
-        Invoke("performSlash", 0.33f);
+        if (!slashing) {
+            slashing = true;
+            invincible = true;
+            other_side.GetComponent<SpriteRenderer>().sprite = twinkle;
+            Invoke("performSlash", 0.1f);
+        }
     }
 
     void performSlash() {
@@ -295,9 +315,13 @@ public class Player : MonoBehaviour {
         //  katana.GetComponent<BoxCollider2D>().enabled = true;
         other_side.GetComponent<CircleCollider2D>().enabled = true;
         List<GameObject> enemies = new List<GameObject>();
+        enemies.Add(GameObject.FindGameObjectWithTag(Enemy_tags[0]));
+       
+        transform.Rotate(Vector3.up, 180);
         foreach (string tag in Enemy_tags) {
             GameObject[] enemy_objects = GameObject.FindGameObjectsWithTag(tag);
-            foreach (GameObject enemy_object in enemy_objects) enemies.Add(enemy_object);
+            foreach (GameObject enemy_object in enemy_objects)
+                enemies.Add(enemy_object);
         }
         for (int i = enemies.Count - 1; i > 0; i--) {
             if (other_side.GetComponent<CircleCollider2D>().bounds.Contains(enemies[i].transform.position)) {
@@ -314,8 +338,21 @@ public class Player : MonoBehaviour {
         sprite_renderer.sprite = slash_back;
         Invoke("idleAnimation", 0.2f);
     }
-
+    void disableKatana() {
+        PowerupName = "None";
+        powerup_points = 0;
+        hasPowerup = false;
+        ripper_mode = false;
+        if (my_number == 1) {
+            transform.rotation.Set(0, 0, 0, 0);
+            other_side.transform.rotation.Set(0, 0, 180, 0);
+        } else {
+            transform.rotation.Set(0, 0, 180, 0);
+            other_side.transform.rotation.Set(0, 0, 180, 0);
+        }
+    }
     void idleAnimation() {
+        slashing = false;
         other_side.GetComponent<CircleCollider2D>().enabled = false;
         other_side.GetComponent<SpriteRenderer>().sprite = idle_back;
         if (!immortal)
