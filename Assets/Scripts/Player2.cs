@@ -43,7 +43,7 @@ public class Player2 : Player {
         my_inputs.fire2 = string.Format("Fire2{0}", my_number);
         my_inputs.fire3 = string.Format("Fire3{0}", my_number);
         idle = sprite_renderer.sprite;
-        slash = Resources.Load("BearFrontSlash") as Sprite;
+        idle_back = other_side.GetComponent<SpriteRenderer>().sprite;
     }
 
     protected override Vector2 getInputMovementVector() {
